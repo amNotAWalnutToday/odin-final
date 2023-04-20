@@ -2,11 +2,15 @@ import PostContainer from './PostContainer';
 import GroupSidebar from './GroupSidebar';
 import SubHeader from './SubHeader';
 
-export default function Page() {
+type Props = {
+    pageType: string,
+}
+
+export default function Page({pageType}: Props) {
     return(
         <main className="page" >
-            <SubHeader />
-            <div style={{display: 'flex', gap: '1.75rem'}} >
+            {pageType === 'sub' && <SubHeader />}
+            <div className='content' >
                 <PostContainer />
                 <GroupSidebar />
             </div>

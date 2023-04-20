@@ -73,6 +73,12 @@
   grid-column: 2 / 3;
 }
 
+.content {
+  display: flex;
+  gap: 1.75rem;
+  margin-top: 1.75rem;
+}
+
 .post-container {
   width: 640px;
   height: 100vh;
