@@ -2,6 +2,8 @@ import Header from './components/Header';
 import MainSidebar from './components/MainSidebar';
 import Page from './components/Page';
 
+import { db } from './RouteSwitch';
+
 type Props = {
   pageType: string,
 }
