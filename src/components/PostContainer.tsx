@@ -1,11 +1,23 @@
 import Post from './Post';
+import CommunityList from './CommunityList';
 
-export default function PostContainer() {
+type Props = {
+    pageType: string,
+}
+
+export default function PostContainer({pageType}: Props) {
+
+    const mapPosts = () => {
+        const arr = [1, 2, 3];
+        return arr.map((a, b) => {
+            return <Post key={b} />
+        })
+    }
+
     return (
         <div className="post-container" >
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
+            {pageType !== 'list' && mapPosts()}
+            {pageType === 'list' && <CommunityList />}
         </div>
     )
 }

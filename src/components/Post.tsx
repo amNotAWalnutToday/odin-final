@@ -14,8 +14,8 @@ export default function Post() {
                         <button>Join</button>
                     </div>
                     <h3>Lorem ipsum dolor sit, amet consectetur adipisicing.</h3>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum repellendus, non modi quas odit deserunt. Reiciendis, ab explicabo voluptatum ad odio esse aperiam nemo nostrum provident, at rem repellendus iste ratione mollitia in earum hic commodi exercitationem aut maiores perferendis doloremque deleniti. Quasi qui atque nam dolores officiis? Possimus, laboriosam?</p>
                 </div>
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nostrum repellendus, non modi quas odit deserunt. Reiciendis, ab explicabo voluptatum ad odio esse aperiam nemo nostrum provident, at rem repellendus iste ratione mollitia in earum hic commodi exercitationem aut maiores perferendis doloremque deleniti. Quasi qui atque nam dolores officiis? Possimus, laboriosam?</p>
                 <div className="post-bottom">
                     <span>ico </span>
                     <button>000 Comments</button>

@@ -11,7 +11,9 @@ export default function Page({pageType}: Props) {
         <main className="page" >
             {pageType === 'sub' && <SubHeader />}
             <div className='content' >
-                <PostContainer />
+                <PostContainer 
+                    pageType={pageType}
+                />
                 <GroupSidebar />
             </div>
         </main>
