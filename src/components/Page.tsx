@@ -46,6 +46,7 @@ export default function Page({pageType}: Props) {
             <div className='content' >
                 <PostContainer 
                     pageType={pageType}
+                    subSettings={subSettings}
                     subs={subs}
                     setSubs={setSubs}
                 />
