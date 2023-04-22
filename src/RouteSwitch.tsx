@@ -18,7 +18,7 @@ export default function RouteSwitch() {
                     } 
                 />
                 <Route 
-                    path='/sub' 
+                    path='/r/:sub' 
                     element={
                         <App pageType='sub' />
                     } 

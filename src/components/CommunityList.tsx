@@ -1,19 +1,17 @@
 import { getDocs, query, collection, where } from 'firebase/firestore';
 import { db } from '../RouteSwitch';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import SubSchema from '../schemas/sub';
 
-type SubSchema = {
-    summary: string,
-    name: string,
-    icon: string,
-    categories: string[],
+type Props = {
+    subs: SubSchema[],
+    setSubs: React.Dispatch<React.SetStateAction<SubSchema[]>>,
 }
 
-export default function CommunityList() {
+export default function CommunityList({subs, setSubs}: Props) {
     const { category } = useParams();
-    const [subs, setSubs] = useState<SubSchema[]>([]);
 
     useEffect(() => {
         getCommunities();
@@ -46,7 +44,7 @@ export default function CommunityList() {
                         <span className='summary' >
                             {sub.summary}
                         </span>
-                        <Link to='/'>
+                        <Link to={`/r/${sub.name}`}>
                             Visit
                         </Link>
                     </span>
