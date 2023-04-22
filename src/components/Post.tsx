@@ -20,8 +20,8 @@ export default function Post({post, pageType}: Props) {
                             <span style={{color: 'black', fontWeight: 'bold'}}>
                                 {pageType !== 'sub' && `sub/${post.parent.replace(' ', '')} `}
                             </span> 
-                            . posted by {'u/thisuser'} {'some hours ago'}</p>
-                        <button className="btn" style={{padding: '0.25rem 0.75rem'}}>Join</button>
+                            posted by {'u/thisuser'} {'some hours ago'}</p>
+                        <button className="btn flair">Join</button>
                     </div>
                     <h3>{post.title}</h3>
                 </div>

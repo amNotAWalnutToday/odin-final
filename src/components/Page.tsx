@@ -22,7 +22,7 @@ export default function Page({pageType}: Props) {
     }, [sub]);
 
     const getSub = async () => {
-        if(!sub) return;
+        if(!sub) return setSubSettings(undefined);
         const subQuery = query(
             collection(db, 'subs'),
             where('name', '==', sub)
@@ -50,7 +50,9 @@ export default function Page({pageType}: Props) {
                     subs={subs}
                     setSubs={setSubs}
                 />
-                <GroupSidebar />
+                <GroupSidebar 
+                    subSettings={subSettings}
+                />
             </div>
         </main>
     )
