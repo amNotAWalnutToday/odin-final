@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import Details from "./Details";
 import SubSchema from "../schemas/sub"
 
@@ -7,11 +8,29 @@ type Props = {
 }
 
 export default function SidebarCard({subSettings, type}: Props) {
+    const convertTime = (timestamp: Timestamp | undefined) => {
+        const date = timestamp?.toDate().toDateString().split(' ');
+        date?.shift();
+        return date?.join(' ');
+    }
 
     const mapCategories = () => {
         return subSettings?.categories.map((category, ind) => {
             return(
                 <button key={ind} className="btn flair" >{category}</button>
+            )
+        });
+    }
+
+    const mapRules = () => {
+        return subSettings?.rules.map((rule, ind) => {
+            return(
+                <Details
+                    title={rule.rule}
+                    description={rule.description}
+                    numInList={ind + 1}
+                    key={ind}
+                />
             )
         });
     }
@@ -23,6 +42,7 @@ export default function SidebarCard({subSettings, type}: Props) {
             </div>
             <div className="card body" >
                 {subSettings?.summary}
+                <p className='text-trivial' >Created {convertTime(subSettings?.timestamp)}</p>
                 <p>r/{subSettings?.name.replace(' ', '')} topics</p>
                 {mapCategories()}
                 <hr />
@@ -39,14 +59,14 @@ export default function SidebarCard({subSettings, type}: Props) {
             </div>
         </div>
     ) 
-    : type === 'rules' 
+    : type === 'rules' && subSettings?.rules
         ? 
         <div className="card border">
             <div className="header card">
-                <h4 className="text-imp" >r/{subSettings?.name.replace(' ', '')} Rules</h4>
+                <h4 className="text-imp">r/{subSettings?.name.replace(' ', '')} Rules</h4>
             </div>
             <ul className="card body">
-                <Details />
+                {mapRules()}
             </ul>
         </div>
         : <div></div>
