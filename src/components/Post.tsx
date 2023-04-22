@@ -21,7 +21,7 @@ export default function Post({post, pageType}: Props) {
                                 {pageType !== 'sub' && `sub/${post.parent.replace(' ', '')} `}
                             </span> 
                             . posted by {'u/thisuser'} {'some hours ago'}</p>
-                        <button>Join</button>
+                        <button className="btn" style={{padding: '0.25rem 0.75rem'}}>Join</button>
                     </div>
                     <h3>{post.title}</h3>
                 </div>
