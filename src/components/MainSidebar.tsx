@@ -4,17 +4,13 @@ export default function MainSidebar() {
     return (
         <aside className="sidebar main">
             <nav>
-                <p>FEEDS</p>
-                <button>Popular</button>
-                <p>TOPICS</p>
-                <ul>
-                    <li>
-                        <Link to='/t/programming'>Programming</Link>
-                    </li>
-                    <li>
-                        <Link to='/t/gaming'>Gaming</Link>
-                    </li>
-                </ul>
+                <p className='text-trivial' >FEEDS</p>
+                <Link to='/'>Popular</Link>
+                <p className='text-trivial' >TOPICS</p>
+                <div>
+                    <Link to='/t/programming'>Programming</Link>
+                    <Link to='/t/gaming'>Gaming</Link>
+                </div>
             </nav>
         </aside>
     )
