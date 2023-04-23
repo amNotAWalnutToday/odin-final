@@ -1,8 +1,8 @@
 import { getDocs, query, collection, where } from 'firebase/firestore';
-import { db } from '../RouteSwitch';
+import { db } from '../../RouteSwitch';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import SubSchema from '../schemas/sub';
+import SubSchema from '../../schemas/sub';
 import PostContainer from './PostContainer';
 import GroupSidebar from './GroupSidebar';
 import SubHeader from './SubHeader';

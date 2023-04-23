@@ -1,5 +1,5 @@
-import SidebarCard from "./SidebarCard"
-import SubSchema from "../schemas/sub"
+import SidebarCard from "../cards/SidebarCard"
+import SubSchema from "../../schemas/sub"
 
 type Props = {
     subSettings: SubSchema | undefined; 

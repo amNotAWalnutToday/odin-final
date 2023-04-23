@@ -1,9 +1,9 @@
 import { getDocs, query, collection, where } from 'firebase/firestore';
-import { db } from '../RouteSwitch';
+import { db } from '../../RouteSwitch';
 import { useEffect } from 'react';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import SubSchema from '../schemas/sub';
+import SubSchema from '../../schemas/sub';
 
 type Props = {
     subs: SubSchema[],

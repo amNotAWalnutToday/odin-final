@@ -1,4 +1,4 @@
-import SubSchema from "../schemas/sub"
+import SubSchema from "../../schemas/sub"
 
 type Props = {
     subSettings: SubSchema | undefined, 

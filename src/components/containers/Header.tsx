@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import UserDropdown from './UserDropdown';
+import UserDropdown from '../other/UserDropdown';
 import { useState } from 'react';
 
 type Props = {

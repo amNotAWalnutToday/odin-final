@@ -1,5 +1,5 @@
 import { signOut } from "firebase/auth"
-import { auth } from "../RouteSwitch"
+import { auth } from "../../RouteSwitch"
 
 export default function UserDropdown() {
     const signOutUser = async () => {

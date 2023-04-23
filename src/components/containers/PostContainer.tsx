@@ -1,10 +1,10 @@
 import { query, getDocs, collection, where } from 'firebase/firestore';
-import { db } from '../RouteSwitch';
+import { db } from '../../RouteSwitch';
 import { useEffect, useState } from 'react';
-import Post from './Post';
+import Post from '../cards/Post';
 import CommunityList from './CommunityList';
-import SubSchema from '../schemas/sub';
-import PostSchema from '../schemas/post';
+import SubSchema from '../../schemas/sub';
+import PostSchema from '../../schemas/post';
 
 type Props = {
     pageType: string,

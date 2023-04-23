@@ -1,4 +1,4 @@
-import PostSchema from "../schemas/post"
+import PostSchema from "../../schemas/post"
 
 type Props = {
     post: PostSchema,

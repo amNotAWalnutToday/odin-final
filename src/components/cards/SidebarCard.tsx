@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore';
-import Details from "./Details";
-import SubSchema from "../schemas/sub"
+import Details from "../other/Details";
+import SubSchema from "../../schemas/sub";
 
 type Props = {
     subSettings: SubSchema | undefined, 

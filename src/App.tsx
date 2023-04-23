@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import Header from './components/Header';
-import MainSidebar from './components/MainSidebar';
-import Page from './components/Page';
-import LoginForm from './components/LoginForm';
+import Header from './components/containers/Header';
+import MainSidebar from './components/containers/MainSidebar';
+import Page from './components/containers/Page';
+import LoginForm from './components/containers/LoginForm';
 import UserSchema from './schemas/user';
 
 type Props = {

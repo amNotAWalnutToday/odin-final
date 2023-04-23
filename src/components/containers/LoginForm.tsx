@@ -12,8 +12,8 @@ import {
     Timestamp 
 } from 'firebase/firestore';
 import { useRef } from 'react';
-import { db, auth } from '../RouteSwitch';
-import UserSchema from '../schemas/user';
+import { db, auth } from '../../RouteSwitch';
+import UserSchema from '../../schemas/user';
 
 const actionCodeSettings = {
     url: 'http://localhost:3000/',
