@@ -2,6 +2,8 @@
   --page-bg: #dae0e6;
   --box-bg: #fff;
   --bar-bg: rgb(248 249 250);
+  --underlay-bg: #111111cc;
+  --orange: #d93a00;
 
   --border: 1px solid #bbbbbb55;
   --sborder: 0px 0px 1px 1px #bbbbbb55;
@@ -192,7 +194,7 @@ hr {
 }
 
 .btn:hover {
-  background-color: #19f;
+  filter: brightness(110%); 
 }
 
 .dropdown-btn {
@@ -261,6 +263,11 @@ hr {
   gap: 0.5rem;
 }
 
+[type='text'] {
+  width: 100% !important; 
+}
+
+[type='text'],
 [type=search] {
   height: 38px;
   width: 35%;
@@ -277,6 +284,28 @@ hr {
 .btn:hover,
 a:hover {
   cursor: pointer;
+}
+
+.popup {
+  margin: 25%;
+  z-index: 6;
+  width: 400px;
+  border-radius: 9px;
+}
+
+.popup.card {
+  padding: 5rem 3rem;
+}
+
+.underlay {
+  background-color: var(--underlay-bg);
+  width: 100vw;
+  height: 100vw;
+  z-index: 5;
+}
+
+.orange-bg {
+  background-color: #d93a00;
 }
 
 .logo {
