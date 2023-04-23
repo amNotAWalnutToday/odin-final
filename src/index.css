@@ -197,6 +197,16 @@ hr {
   filter: brightness(110%); 
 }
 
+.close-btn {
+  position: absolute;
+  transform: translate(285px, -75px);
+  width: 2em;
+  height: 2em;
+  background-color: unset;
+  border: none;
+  font-size: 30px;
+}
+
 .dropdown-btn {
   background-color: var(--box-bg);
   padding: 1rem 1rem;
@@ -279,6 +289,7 @@ hr {
   border: none;
 }
 
+.close-btn:hover,
 .details:hover,
 .dropdown-btn:hover,
 .btn:hover,
@@ -287,7 +298,9 @@ a:hover {
 }
 
 .popup {
-  margin: 25%;
+  position: fixed;
+  top: 25%;
+  left: calc(50% - 200px);
   z-index: 6;
   width: 400px;
   border-radius: 9px;
@@ -298,6 +311,7 @@ a:hover {
 }
 
 .underlay {
+  position: fixed;
   background-color: var(--underlay-bg);
   width: 100vw;
   height: 100vw;

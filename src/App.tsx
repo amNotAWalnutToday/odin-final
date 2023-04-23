@@ -1,16 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import MainSidebar from './components/MainSidebar';
 import Page from './components/Page';
 import LoginForm from './components/LoginForm';
+import UserSchema from './schemas/user';
 
 type Props = {
   pageType: string,
+  user: UserSchema | undefined,
+  setUser: React.Dispatch<React.SetStateAction<UserSchema | undefined>>,
 }
 
-export default function App({pageType}: Props) {
+export default function App({pageType, user, setUser}: Props) {
   const [showLogin, setShowLogin] = useState<boolean>(false);
+  const [canLogin, setCanLogin] = useState<boolean>(false);
   const toggleLoginForm = () => setShowLogin(!showLogin);
+  const toggleCanLogin = () => setCanLogin(!canLogin);
+
+  useEffect(() => {
+    if(window.localStorage.getItem('emailForSignIn') && !user) {
+      toggleLoginForm();
+      toggleCanLogin();
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -20,7 +32,12 @@ export default function App({pageType}: Props) {
       <MainSidebar />
       <Page pageType={pageType} />
       {showLogin
-      && <LoginForm />
+      && 
+      <LoginForm 
+        toggleLoginForm={toggleLoginForm}
+        canLogin={canLogin}
+        setUser={setUser}
+      />
       }
     </div>
   );

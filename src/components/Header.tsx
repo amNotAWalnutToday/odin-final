@@ -3,7 +3,7 @@ import UserDropdown from './UserDropdown';
 import { useState } from 'react';
 
 type Props = {
-    toggleLoginForm: any,
+    toggleLoginForm: () => void,
 }
 
 export default function Header({toggleLoginForm}: Props) {
