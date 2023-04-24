@@ -59,6 +59,7 @@ export default function Page({pageType}: Props) {
                 />
                 }
                 <GroupSidebar 
+                    pageType={pageType}
                     subSettings={subSettings}
                 />
             </div>

@@ -172,6 +172,15 @@ hr {
   background-color: var(--bar-bg);
 }
 
+.list {
+  display: flex;
+}
+
+.list .card {
+  gap: 0rem;
+  padding: 0 0.25rem;
+}
+
 .border {
   border-radius: 3px;
   box-shadow: var(--sborder);
@@ -203,6 +212,10 @@ hr {
   border-radius: 25px;
   border: none;
   padding: 0.55rem 2.5rem;
+}
+
+.btn-input-bg {
+  color: var(--btn-blue);
 }
 
 .btn:hover {
@@ -334,11 +347,13 @@ hr {
   margin: 0;
 }
 
+.btn-input-bg,
 input:hover {
   background-color: var(--box-bg);
   box-shadow: 0px 0px 1px 1px var(--btn-blue)
 }
 
+.list .card li:hover,
 .compose-post-btn-grp button:not(:disabled):hover,
 .close-btn:hover,
 .details:hover,
