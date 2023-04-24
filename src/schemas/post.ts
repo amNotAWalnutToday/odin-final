@@ -1,3 +1,4 @@
+import { Timestamp } from "firebase/firestore";
 import UserSchema from "./user";
 
 type PostSchema = {
@@ -5,7 +6,7 @@ type PostSchema = {
     title: string,
     message: string,
     upvotes: number,
-    timestamp: Date,
+    timestamp: Timestamp,
     parent: string,
     poster: UserSchema,
 }
