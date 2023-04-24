@@ -44,19 +44,20 @@ export default function Page({pageType}: Props) {
                 subSettings={subSettings}
             />
             }
-            {pageType === 'submit'
-            &&
-            <ComposePost 
-                
-            />
-            }
             <div className='content' >
+                {pageType === 'submit'
+                ? 
+                <ComposePost 
+                
+                />
+                :
                 <PostContainer 
                     pageType={pageType}
                     subSettings={subSettings}
                     subs={subs}
                     setSubs={setSubs}
                 />
+                }
                 <GroupSidebar 
                     subSettings={subSettings}
                 />

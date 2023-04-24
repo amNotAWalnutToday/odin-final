@@ -1,3 +1,4 @@
+import parse from 'html-react-parser';
 import PostSchema from "../../schemas/post"
 
 type Props = {
@@ -25,7 +26,9 @@ export default function Post({post, pageType}: Props) {
                     </div>
                     <h3>{post.title}</h3>
                 </div>
-                <p>{post.message}</p>
+                <div className='htmlrevert' >
+                    {parse(post.message)}
+                </div>
                 <div className="post-bottom">
                     <span>ico </span>
                     <button>000 Comments</button>

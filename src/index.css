@@ -126,7 +126,6 @@ hr {
   align-items: center;
   gap: 1rem;
   width: 640px;
-  height: 100vh;
   padding-bottom: 1rem;
   /*background-color: #63111111;*/
 }
@@ -333,7 +332,7 @@ input:hover {
   box-shadow: 0px 0px 1px 1px var(--btn-blue)
 }
 
-.compose-post-btn-grp button:hover,
+.compose-post-btn-grp button:not(:disabled):hover,
 .close-btn:hover,
 .details:hover,
 .dropdown-btn:hover,
@@ -384,11 +383,35 @@ a:hover {
   background-color: var(--bar-bg);
   box-shadow: var(--sborder);
   transform: translate(0, 8px);
+  flex-direction: row-reverse;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ql-link,
+.ql-picker-label {
+  display: none !important;
 }
 
 .ql-container {
   border-radius: 9px;
   resize: both;
+}
+
+.htmlrevert ul li {
+  list-style-type: disc;
+}
+
+.htmlrevert ol li {
+  list-style-type: number;
+}
+
+.htmlrevert li {
+  margin-left: 2.5rem;
+}
+
+.htmlrevert u {
+  text-decoration: underline;
 }
 
 .logo {

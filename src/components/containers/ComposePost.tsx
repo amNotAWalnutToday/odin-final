@@ -44,7 +44,7 @@ export default function ComposePost() {
     }
 
     return(
-        <div className="content">
+        <div>
             <div className="post-container" >
                 <div style={{padding: '0'}} className="card body rounded-border">
                     <div className="compose-post-btn-grp" >
@@ -62,6 +62,7 @@ export default function ComposePost() {
                             onChange={(e) => titleHandler(e)}
                         />
                         <ReactQuill 
+                            className="htmlrevert"
                             placeholder="Text(required)"
                             onChange={postHandler}
                         />
