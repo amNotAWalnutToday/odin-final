@@ -2,10 +2,11 @@ import { getDocs, query, collection, where } from 'firebase/firestore';
 import { db } from '../../RouteSwitch';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import SubSchema from '../../schemas/sub';
 import PostContainer from './PostContainer';
 import GroupSidebar from './GroupSidebar';
 import SubHeader from './SubHeader';
+import ComposePost from './ComposePost';
+import SubSchema from '../../schemas/sub';
 
 type Props = {
     pageType: string,
@@ -41,6 +42,12 @@ export default function Page({pageType}: Props) {
             && 
             <SubHeader 
                 subSettings={subSettings}
+            />
+            }
+            {pageType === 'submit'
+            &&
+            <ComposePost 
+                
             />
             }
             <div className='content' >

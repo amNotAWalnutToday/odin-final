@@ -84,7 +84,7 @@ export default function LoginForm({toggleLoginForm, canLogin, setUser}: Props) {
     return(
         <>
             <div className="underlay"/>
-            <div className="card body popup border">
+            <div className="card body popup rounded-border">
                 <button className='close-btn' onClick={toggleLoginForm}>X</button>
                 <h1>Log In</h1>
                 <p>By continuing, you are setting up a Replicatedit account and agree to our User Agreement and Privacy Policy.</p>
