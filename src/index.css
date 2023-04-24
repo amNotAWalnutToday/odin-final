@@ -2,6 +2,7 @@
   --page-bg: #dae0e6;
   --box-bg: #fff;
   --bar-bg: rgb(248 249 250);
+  --btn-blue: #0079d3;
   --underlay-bg: #111111cc;
   --orange: #d93a00;
 
@@ -130,6 +131,7 @@ hr {
   /*background-color: #63111111;*/
 }
 
+.bar,
 .card,
 .post {
   display: flex;
@@ -142,6 +144,7 @@ hr {
   height: fit-content;
 }
 
+.bar,
 .card.body {
   gap: 1rem;
   padding: 1rem;
@@ -184,8 +187,12 @@ hr {
   width: fit-content;
 }
 
+.bar {
+  
+}
+
 .btn {
-  background-color: #0079d3;
+  background-color: var(--btn-blue);
   color: white;
   font-weight: bold;
   border-radius: 25px;
@@ -287,6 +294,17 @@ hr {
   box-shadow: var(--sborder);
   border-radius: 25px;
   border: none;
+  transition: all ease-in-out 0.05s;
+}
+
+[type='text'].border {
+  border-radius: 3px;
+  margin: 0;
+}
+
+input:hover {
+  background-color: var(--box-bg);
+  box-shadow: 0px 0px 1px 1px var(--btn-blue)
 }
 
 .close-btn:hover,

@@ -13,6 +13,10 @@ export const db = getFirestore(app);
 
 export default function RouteSwitch() {
     const [user, setUser] = useState<UserSchema>();
+    const appProps = {
+        user,
+        setUser,
+    }
 
     return (
         <Router>
@@ -22,28 +26,43 @@ export default function RouteSwitch() {
                     element={
                         <App 
                             pageType='home' 
-                            user={user}
-                            setUser={setUser}
+                            {...appProps}
                         />
                     } 
+                />
+                <Route 
+                    path='/submit'
+                    element={
+                        <App 
+                            pageType='submit'
+                            {...appProps}
+                        />
+                    }
                 />
                 <Route 
                     path='/r/:sub' 
                     element={
                         <App 
                             pageType='sub' 
-                            user={user}
-                            setUser={setUser}
+                            {...appProps}
                         />
                     } 
+                />
+                <Route 
+                    path='/r/:sub/submit'
+                    element={
+                        <App 
+                            pageType='submit'
+                            {...appProps}
+                        />
+                    }
                 />
                 <Route 
                     path='/t/:category' 
                     element={
                         <App 
                             pageType='list' 
-                            user={user}
-                            setUser={setUser}
+                            {...appProps}
                         />
                     }
                 />

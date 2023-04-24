@@ -3,6 +3,7 @@ import { db } from '../../RouteSwitch';
 import { useEffect, useState } from 'react';
 import Post from '../cards/Post';
 import CommunityList from './CommunityList';
+import CreatePostBar from '../other/CreatePostBar';
 import SubSchema from '../../schemas/sub';
 import PostSchema from '../../schemas/post';
 
@@ -48,6 +49,7 @@ export default function PostContainer({pageType, subSettings, subs, setSubs}: Pr
 
     return (
         <div className="post-container" >
+            {(pageType !== 'list' && pageType !== 'submit') && <CreatePostBar />}
             {pageType !== 'list' && mapPosts()}
             {pageType === 'list' 
             && 
