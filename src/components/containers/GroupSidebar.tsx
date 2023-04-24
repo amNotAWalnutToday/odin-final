@@ -20,6 +20,14 @@ export default function GroupSidebar({subSettings}: Props) {
                 type={'rules'}
             />
             }
+            <button 
+                className='scroll-btn btn flair' 
+                onClick={() => {
+                    window.scrollTo(0, 0);
+                }}
+            >
+                Back To Top
+            </button>
         </div>
     )
 }

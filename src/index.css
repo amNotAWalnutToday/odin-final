@@ -136,6 +136,7 @@ hr {
   display: flex;
   width: 100%;
   overflow: hidden;
+  z-index: 1;
 }
 
 .card {
@@ -227,6 +228,12 @@ hr {
 
 .compose-post-btn-grp button:not(:disabled):hover {
   background-color: #0079d31a;
+}
+
+.scroll-btn {
+  position: fixed;
+  bottom: 2.5%;
+  right: 12.5%;
 }
 
 .close-btn {
