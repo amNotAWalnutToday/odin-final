@@ -22,6 +22,7 @@ export default function App({pageType, user, setUser}: Props) {
       toggleLoginForm();
       toggleCanLogin();
     }
+    /*eslint-disable-next-line*/
   }, []);
 
   return (

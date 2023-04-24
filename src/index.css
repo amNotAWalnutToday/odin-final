@@ -247,7 +247,7 @@ hr {
   font-size: 1.2em;
 }
 
-.sidebar.main a:hover {
+.sidebar.main a:not(.pseudo-select):hover {
   background-color: var(--bar-bg);
 }
 
@@ -313,6 +313,10 @@ input:hover {
 .btn:hover,
 a:hover {
   cursor: pointer;
+}
+
+.pseudo-select {
+  background-color: var(--page-bg);
 }
 
 .popup {
