@@ -82,6 +82,7 @@ export default function LoginForm({
                 window.localStorage.removeItem('emailForSignIn');
                 console.log('signed in');
                 setUser(currentUser);
+                toggleLoginForm();
             }
         } catch(e) {
             console.error('could not sign in');

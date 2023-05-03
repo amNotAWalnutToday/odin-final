@@ -4,8 +4,13 @@ import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
 import { useState } from "react";
 import { db } from "../../RouteSwitch";
+import UserSchema from "../../schemas/user";
 
-export default function ComposePost() {
+type Props = {
+    user: UserSchema | undefined,
+}
+
+export default function ComposePost({user}: Props) {
     const { sub } = useParams();
     const [postDetails, setPostDetails] = useState({
         title: '',
@@ -27,14 +32,15 @@ export default function ComposePost() {
     const postPost = async () => {
         try {
             /*eslint-disable-next-line*/
-            if(!sub) throw "No sub selected to post to!";
+            if(!user) throw console.error('must be signed in');
+            if(!sub) throw console.error("No sub selected to post to!");
             const newPost = {
                 title: postDetails.title,
                 message: postDetails.post,
                 upvotes: 0,
                 timestamp: Timestamp.now(),
                 parent: sub,
-                poster: 'Anon' 
+                poster: user.name,
             }
             const postRef = await addDoc(collection(db, "posts"), newPost);
             console.log('Post sent Successful!', postRef.id);

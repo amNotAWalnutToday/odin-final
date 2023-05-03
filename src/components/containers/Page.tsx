@@ -50,7 +50,7 @@ export default function Page({pageType, user}: Props) {
                 {pageType === 'submit'
                 ? 
                 <ComposePost 
-                
+                    user={user}
                 />
                 :
                 <PostContainer 
