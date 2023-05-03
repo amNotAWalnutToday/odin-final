@@ -7,12 +7,14 @@ import GroupSidebar from './GroupSidebar';
 import SubHeader from './SubHeader';
 import ComposePost from './ComposePost';
 import SubSchema from '../../schemas/sub';
+import UserSchema from '../../schemas/user';
 
 type Props = {
     pageType: string,
+    user: UserSchema | undefined,
 }
 
-export default function Page({pageType}: Props) {
+export default function Page({pageType, user}: Props) {
     const { sub } = useParams();
     const [subs, setSubs] = useState<SubSchema[]>([]);
     const [subSettings, setSubSettings] = useState<SubSchema>();
@@ -53,6 +55,7 @@ export default function Page({pageType}: Props) {
                 :
                 <PostContainer 
                     pageType={pageType}
+                    user={user}
                     subSettings={subSettings}
                     subs={subs}
                     setSubs={setSubs}
@@ -60,6 +63,7 @@ export default function Page({pageType}: Props) {
                 }
                 <GroupSidebar 
                     pageType={pageType}
+                    user={user}
                     subSettings={subSettings}
                 />
             </div>

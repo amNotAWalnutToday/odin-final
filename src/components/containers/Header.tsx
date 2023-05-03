@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import UserDropdown from '../other/UserDropdown';
 import { useState } from 'react';
+import UserSchema from '../../schemas/user';
 
 type Props = {
+    user: UserSchema | undefined,
     toggleLoginForm: () => void,
 }
 
-export default function Header({toggleLoginForm}: Props) {
+export default function Header({user, toggleLoginForm}: Props) {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
@@ -21,11 +23,20 @@ export default function Header({toggleLoginForm}: Props) {
                 placeholder='Search replicatedit'
             />
             <div className='line-flex' >
-                <button className='btn' onClick={toggleLoginForm} >Log in</button>
+                {!user 
+                && 
+                <button 
+                    className='btn' 
+                    onClick={toggleLoginForm} 
+                >
+                    Log in
+                </button>}
+                {user 
+                && 
                 <button className='dropdown-btn border' onClick={toggleDropdown}>
-                    <img className='btn-img' src="person.svg" alt="" />
-                </button>
-                {dropdownOpen && <UserDropdown />}
+                    <img className='btn-img' src="person.svg" alt="" />           
+                </button>}
+                {dropdownOpen && <UserDropdown user={user} />}
             </div>
         </header>
     )

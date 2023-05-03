@@ -6,15 +6,23 @@ import CommunityList from './CommunityList';
 import CreatePostBar from '../other/CreatePostBar';
 import SubSchema from '../../schemas/sub';
 import PostSchema from '../../schemas/post';
+import UserSchema from '../../schemas/user';
 
 type Props = {
     pageType: string,
+    user: UserSchema | undefined,
     subSettings: SubSchema | undefined,
     subs: SubSchema[],
     setSubs: React.Dispatch<React.SetStateAction<SubSchema[]>>,
 }
 
-export default function PostContainer({pageType, subSettings, subs, setSubs}: Props) {
+export default function PostContainer({
+        pageType, 
+        user,
+        subSettings, 
+        subs, 
+        setSubs
+    }: Props) {
     const [posts, setPosts] = useState<PostSchema[]>([]);
     
     useEffect(() => {
@@ -49,7 +57,7 @@ export default function PostContainer({pageType, subSettings, subs, setSubs}: Pr
 
     return (
         <div className="post-container" >
-            {(pageType !== 'list' && pageType !== 'submit') && <CreatePostBar />}
+            {(pageType !== 'list' && pageType !== 'submit' && user) && <CreatePostBar />}
             {pageType !== 'list' && mapPosts()}
             {pageType === 'list' 
             && 

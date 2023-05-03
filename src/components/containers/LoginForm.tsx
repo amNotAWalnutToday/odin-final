@@ -23,10 +23,16 @@ const actionCodeSettings = {
 type Props = {
     toggleLoginForm: () => void,
     canLogin: boolean,
+    toggleCanLogin: () => void,
     setUser: React.Dispatch<React.SetStateAction<UserSchema | undefined>>,
 }
 
-export default function LoginForm({toggleLoginForm, canLogin, setUser}: Props) {
+export default function LoginForm({
+        toggleLoginForm, 
+        canLogin,
+        toggleCanLogin, 
+        setUser
+    }: Props) {
     const email = useRef<HTMLInputElement>(null);
 
     const authStepOne = async () => {
@@ -43,6 +49,7 @@ export default function LoginForm({toggleLoginForm, canLogin, setUser}: Props) {
 
     const signIn = async () => {
         try {
+            console.log('is attempting...');
             if(isSignInWithEmailLink(auth, window.location.href)) {
                 let email = window.localStorage.getItem('emailForSignIn');
                 if(!email) return;
@@ -100,11 +107,13 @@ export default function LoginForm({toggleLoginForm, canLogin, setUser}: Props) {
                     />
                 }
                 <button className="btn orange-bg" onClick={() => {
-                    !window.localStorage.getItem('emailForSignIn') 
+                    !window.localStorage.getItem('emailForSignIn')
                         ? authStepOne()
                         : signIn();
                 }}>Log In</button>
-                <p>New to Replicatedit? Sign Up</p>
+                <p>Already got an email?  
+                    <span onClick={toggleCanLogin} style={{color: 'red'}}> Click here to authenticate!</span>
+                </p>
             </div>
         </>
     )

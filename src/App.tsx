@@ -28,15 +28,20 @@ export default function App({pageType, user, setUser}: Props) {
   return (
     <div className="App">
       <Header
+        user={user}
         toggleLoginForm={toggleLoginForm}
       />
       <MainSidebar />
-      <Page pageType={pageType} />
+      <Page 
+        pageType={pageType} 
+        user={user}
+      />
       {showLogin
       && 
       <LoginForm 
         toggleLoginForm={toggleLoginForm}
         canLogin={canLogin}
+        toggleCanLogin={toggleCanLogin}
         setUser={setUser}
       />
       }
