@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getFirestore, query, where, collection, getDocs } from 'firebase/firestore';
+import { getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import firebaseConfig from './firebase.config';
 import App from './App';
 import UserSchema from './schemas/user';
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+setPersistence(auth, browserLocalPersistence);
 export const db = getFirestore(app);
 
 export default function RouteSwitch() {
@@ -17,6 +18,29 @@ export default function RouteSwitch() {
         user,
         setUser,
     }
+
+    const relog = async (email: string | null) => {
+        try {
+            const userQuery = query(
+                collection(db, "users"),
+                where("email", "==", email) 
+            );
+            const snapshot = await getDocs(userQuery);
+            let authedUser;
+            snapshot.forEach((userData) => {
+                authedUser = userData.data();
+            });
+            setUser(authedUser);
+        } catch(err) {
+            console.error("Not Authenticated!");
+        }
+    }
+
+    useEffect(() => {
+        setTimeout(() => {
+            if(auth.currentUser) relog(auth.currentUser.email);
+        }, 1000);
+    }, []);
 
     return (
         <Router>

@@ -39,6 +39,7 @@ export default function App({pageType, user, setUser}: Props) {
     <div className="App">
       <Header
         user={user}
+        setUser={setUser}
         toggleLoginForm={toggleLoginForm}
       />
       <MainSidebar />

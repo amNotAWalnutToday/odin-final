@@ -2,6 +2,8 @@ import {
     sendSignInLinkToEmail, 
     isSignInWithEmailLink, 
     signInWithEmailLink,
+    setPersistence,
+    browserLocalPersistence
 } from 'firebase/auth';
 import { 
     query, 
@@ -52,7 +54,8 @@ export default function LoginForm({
             console.log('is attempting...');
             if(isSignInWithEmailLink(auth, window.location.href)) {
                 let email = window.localStorage.getItem('emailForSignIn');
-                if(!email) return;
+                if(!email) throw Error;
+                await setPersistence(auth, browserLocalPersistence);
                 const authedUser = await signInWithEmailLink(auth, email, window.location.href);
                 let currentUser: UserSchema | undefined;
                 const userQuery = query(

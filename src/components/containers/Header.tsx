@@ -5,10 +5,11 @@ import UserSchema from '../../schemas/user';
 
 type Props = {
     user: UserSchema | undefined,
+    setUser: React.Dispatch<React.SetStateAction<UserSchema | undefined>>,
     toggleLoginForm: () => void,
 }
 
-export default function Header({user, toggleLoginForm}: Props) {
+export default function Header({user, setUser, toggleLoginForm}: Props) {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
@@ -36,7 +37,12 @@ export default function Header({user, toggleLoginForm}: Props) {
                 <button className='dropdown-btn border' onClick={toggleDropdown}>
                     <img className='btn-img' src="person.svg" alt="" />           
                 </button>}
-                {dropdownOpen && <UserDropdown user={user} />}
+                {dropdownOpen 
+                && 
+                <UserDropdown 
+                    user={user}
+                    setUser={setUser} 
+                />}
             </div>
         </header>
     )
