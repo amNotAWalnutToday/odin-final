@@ -37,7 +37,7 @@ export default function ComposePost({user}: Props) {
             const newPost = {
                 title: postDetails.title,
                 message: postDetails.post,
-                upvotes: 0,
+                upvotes: [],
                 timestamp: Timestamp.now(),
                 parent: sub,
                 poster: user.name,

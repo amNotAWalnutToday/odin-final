@@ -51,7 +51,16 @@ export default function PostContainer({
 
     const mapPosts = () => {
         return posts.map((post, ind) => {
-            return <Post key={ind} post={post} pageType={pageType} />
+            return (
+                <Post 
+                    key={ind} 
+                    post={post}
+                    posts={posts}
+                    setPosts={setPosts}
+                    user={user}
+                    pageType={pageType} 
+                />
+            )
         })
     }
 

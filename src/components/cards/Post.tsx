@@ -1,18 +1,85 @@
+import { updateDoc, doc, Timestamp } from 'firebase/firestore';
 import parse from 'html-react-parser';
-import PostSchema from "../../schemas/post"
+import PostSchema from "../../schemas/post";
+import { Vote } from '../../schemas/post';
+import { db } from '../../RouteSwitch';
+import UserSchema from '../../schemas/user';
 
 type Props = {
     post: PostSchema,
+    posts: PostSchema[],
+    setPosts: React.Dispatch<React.SetStateAction<PostSchema[]>>,
+    user: UserSchema | undefined,
     pageType: string,
 }
 
-export default function Post({post, pageType}: Props) {
+export default function Post({post, posts, setPosts, user, pageType}: Props) {
+    const convertTime = (timestamp: Timestamp | undefined) => {
+        const date = timestamp?.toDate().toDateString().split(' ');
+        date?.shift();
+        return date?.join(' ');
+        // change later,  this is a duplicate function from sidebarCard.tsx */
+        // should check for how long ago the message was posted             */
+    }
+
+    const checkForVoter = (upvotes: Vote[]) => {
+        if(!user) return false;
+        for(const voter of upvotes) {
+            if(voter.user === user.email) return true;
+        }
+    }
+
+    const checkIfUpvote = () => {
+        if(!user) return '';
+        const upvotes = post.upvotes;
+        for(const voter of upvotes) {
+            if(voter.user === user.email) {
+                return voter.isUpvote ? 'upvote' : 'downvote';
+            }
+        }
+    }
+    
+    const handleVote = async (isUpvote: boolean) => {
+        try {
+            const postSlice = [...posts];
+            let thisPost;
+            for(const anyPost of postSlice) {
+                if(anyPost._id === post._id) thisPost = anyPost;
+            }
+            if(!thisPost || !user) throw Error;
+            if(checkForVoter(post.upvotes)) {
+                const ind = thisPost.upvotes.findIndex((p) => p.user === user.email);
+                thisPost.upvotes.splice(ind, 1);
+            } else {
+                thisPost.upvotes.push({user: user.email, isUpvote});
+            }
+            await updateDoc(doc(db, 'posts', post._id), thisPost);
+            setPosts(postSlice);
+        } catch(err) {
+            console.error(err);
+        }
+    }
+    
+    const sumVotes = ():number => {
+        let [upv, downv] = [0, 0];
+        for(const vote of post.upvotes) {
+            vote.isUpvote ? upv++ : downv++
+        }
+        return upv - downv;
+    } 
+
     return(
         <div className="post border" >
             <div className="rating-bar">
-                <button>up</button>
-                <p>{post.upvotes}</p>
-                <button>do</button>
+                <button 
+                    className={`arrow-thick rot90 ${checkIfUpvote() === 'upvote' ? 'pseudo-select' : ''}`} 
+                    onClick={() => handleVote(true)} 
+                />
+                <b>{sumVotes()}</b>
+                <button
+                    className={`arrow-thick rot270 ${checkIfUpvote() === 'downvote' ? 'pseudo-select' : ''}`} 
+                    onClick={() => handleVote(false)} 
+                />
             </div>
             <div className="post-main">
                 <div className="post-top">
@@ -21,7 +88,7 @@ export default function Post({post, pageType}: Props) {
                             <span style={{color: 'black', fontWeight: 'bold'}}>
                                 {pageType !== 'sub' && `sub/${post.parent.replace(' ', '')} `}
                             </span> 
-                            posted by {'u/thisuser'} {'some hours ago'}</p>
+                            posted by {`u/${post.poster}`} {`on ${convertTime(post.timestamp)}`}</p>
                         <button className="btn flair">Join</button>
                     </div>
                     <h3>{post.title}</h3>
