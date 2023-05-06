@@ -1,6 +1,10 @@
 import { useNavigate } from "react-router-dom"
 
-export default function HomeSidebarCard() {
+type Props = {
+    toggleShowCreateSub: () => void,
+}
+
+export default function HomeSidebarCard({toggleShowCreateSub}: Props) {
     const navigate = useNavigate();
     
     return(
@@ -17,7 +21,12 @@ export default function HomeSidebarCard() {
                 >
                     Create Post
                 </button>
-                <button className="btn btn-input-bg">Create Community</button>
+                <button 
+                    className="btn btn-input-bg"
+                    onClick={toggleShowCreateSub}
+                >
+                    Create Community
+                </button>
             </div>
         </div>
     )

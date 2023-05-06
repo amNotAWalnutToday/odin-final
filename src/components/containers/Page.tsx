@@ -12,9 +12,10 @@ import UserSchema from '../../schemas/user';
 type Props = {
     pageType: string,
     user: UserSchema | undefined,
+    toggleShowCreateSub: () => void,
 }
 
-export default function Page({pageType, user}: Props) {
+export default function Page({pageType, user, toggleShowCreateSub}: Props) {
     const { sub } = useParams();
     const [subs, setSubs] = useState<SubSchema[]>([]);
     const [subSettings, setSubSettings] = useState<SubSchema>();
@@ -65,6 +66,7 @@ export default function Page({pageType, user}: Props) {
                     pageType={pageType}
                     user={user}
                     subSettings={subSettings}
+                    toggleShowCreateSub={toggleShowCreateSub}
                 />
             </div>
         </main>

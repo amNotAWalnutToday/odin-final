@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, query, where, collection, getDocs } from 'firebase/firestore';
@@ -12,8 +12,16 @@ export const auth = getAuth(app);
 setPersistence(auth, browserLocalPersistence);
 export const db = getFirestore(app);
 
+interface UserContextInterface {
+    user: UserSchema | undefined,
+    setUser: React.Dispatch<React.SetStateAction<UserSchema | undefined>>
+}
+
+export const UserContext = createContext({} as UserContextInterface);
+
 export default function RouteSwitch() {
     const [user, setUser] = useState<UserSchema>();
+
     const appProps = {
         user,
         setUser,
@@ -43,54 +51,56 @@ export default function RouteSwitch() {
     }, []);
 
     return (
-        <Router>
-            <Routes>
-                <Route 
-                    path='/' 
-                    element={
-                        <App 
-                            pageType='home' 
-                            {...appProps}
-                        />
-                    } 
-                />
-                <Route 
-                    path='/submit'
-                    element={
-                        <App 
-                            pageType='submit'
-                            {...appProps}
-                        />
-                    }
-                />
-                <Route 
-                    path='/r/:sub' 
-                    element={
-                        <App 
-                            pageType='sub' 
-                            {...appProps}
-                        />
-                    } 
-                />
-                <Route 
-                    path='/r/:sub/submit'
-                    element={
-                        <App 
-                            pageType='submit'
-                            {...appProps}
-                        />
-                    }
-                />
-                <Route 
-                    path='/t/:category' 
-                    element={
-                        <App 
-                            pageType='list' 
-                            {...appProps}
-                        />
-                    }
-                />
-            </Routes>
+        <Router> 
+            <UserContext.Provider value={{user, setUser}}>
+                <Routes>
+                    <Route
+                        path='/'
+                        element={
+                            <App
+                                pageType='home'
+                                {...appProps}
+                            />
+                        }
+                    />
+                    <Route
+                        path='/submit'
+                        element={
+                            <App
+                                pageType='submit'
+                                {...appProps}
+                            />
+                        }
+                    />
+                    <Route
+                        path='/r/:sub'
+                        element={
+                            <App
+                                pageType='sub'
+                                {...appProps}
+                            />
+                        }
+                    />
+                    <Route
+                        path='/r/:sub/submit'
+                        element={
+                            <App
+                                pageType='submit'
+                                {...appProps}
+                            />
+                        }
+                    />
+                    <Route
+                        path='/t/:category'
+                        element={
+                            <App
+                                pageType='list'
+                                {...appProps}
+                            />
+                        }
+                    />
+                </Routes>
+            </UserContext.Provider>
         </Router>
     )
 }

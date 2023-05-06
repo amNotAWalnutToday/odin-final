@@ -7,15 +7,23 @@ import UserSchema from "../../schemas/user";
 type Props = {
     pageType: string,
     user: UserSchema | undefined,
-    subSettings: SubSchema | undefined; 
+    subSettings: SubSchema | undefined, 
+    toggleShowCreateSub: () => void,
 }
 
-export default function GroupSidebar({pageType, user, subSettings}: Props) {
+export default function GroupSidebar({
+        pageType, 
+        user, 
+        subSettings, 
+        toggleShowCreateSub
+    }: Props) {
     return(
         <div className="sidebar sub" >
             {(pageType === 'home' && user)
             &&
-            <HomeSidebarCard />
+            <HomeSidebarCard 
+                toggleShowCreateSub={toggleShowCreateSub}
+            />
             }
             {pageType === 'home'
             &&
@@ -29,7 +37,7 @@ export default function GroupSidebar({pageType, user, subSettings}: Props) {
                 type={'about'}
             />
             }
-            {subSettings 
+            {(subSettings && subSettings.rules?.length > 0)
             &&
             <SidebarCard
                 subSettings={subSettings}
