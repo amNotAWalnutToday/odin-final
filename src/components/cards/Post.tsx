@@ -1,9 +1,10 @@
-import { updateDoc, doc, Timestamp } from 'firebase/firestore';
+import { updateDoc, doc, Timestamp, collection, where, getDocs, query } from 'firebase/firestore';
 import parse from 'html-react-parser';
 import PostSchema from "../../schemas/post";
 import { Vote } from '../../schemas/post';
 import { db } from '../../RouteSwitch';
 import UserSchema from '../../schemas/user';
+import SubSchema from '../../schemas/sub';
 
 type Props = {
     post: PostSchema,
@@ -11,9 +12,19 @@ type Props = {
     setPosts: React.Dispatch<React.SetStateAction<PostSchema[]>>,
     user: UserSchema | undefined,
     pageType: string,
+    joinSub: (subSlice: SubSchema) => void,
+    checkHasJoinedSub: (subSlice: SubSchema) => boolean,
 }
 
-export default function Post({post, posts, setPosts, user, pageType}: Props) {
+export default function Post({
+        post, 
+        posts, 
+        setPosts, 
+        user, 
+        pageType,
+        joinSub,
+        checkHasJoinedSub,
+    }: Props) {
     const convertTime = (timestamp: Timestamp | undefined) => {
         const date = timestamp?.toDate().toDateString().split(' ');
         date?.shift();
@@ -68,6 +79,24 @@ export default function Post({post, posts, setPosts, user, pageType}: Props) {
         return upv - downv;
     } 
 
+    /*eslint-disable-next-line*/
+    const populateParent = async () => {
+        try {
+            const subQuery = query(
+                collection(db, 'subs'),
+                where('name', '==', post.parent)
+            );
+            const snapshot = await getDocs(subQuery);
+            let thisSub;
+            snapshot.forEach((s) => {
+                thisSub = s.data();
+            });
+            return thisSub;
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
     return(
         <div className="post border" >
             <div className="rating-bar">
@@ -89,7 +118,6 @@ export default function Post({post, posts, setPosts, user, pageType}: Props) {
                                 {pageType !== 'sub' && `sub/${post.parent.replace(' ', '')} `}
                             </span> 
                             posted by {`u/${post.poster}`} {`on ${convertTime(post.timestamp)}`}</p>
-                        <button className="btn flair">Join</button>
                     </div>
                     <h3>{post.title}</h3>
                 </div>

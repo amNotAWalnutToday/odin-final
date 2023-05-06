@@ -48,7 +48,7 @@ export default function SidebarCard({subSettings, type}: Props) {
                 <hr />
                 <div style={{display: 'flex'}} >
                     <div>
-                        <p>0</p>
+                        <p>{subSettings?.members?.length ?? 0}</p>
                         <p className="text-trivial">Members</p>
                     </div>
                     <div style={{marginLeft: '25%'}} >

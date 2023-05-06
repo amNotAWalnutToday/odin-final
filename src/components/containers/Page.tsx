@@ -1,4 +1,4 @@
-import { getDocs, query, collection, where } from 'firebase/firestore';
+import { getDocs, query, collection, where, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../RouteSwitch';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -32,11 +32,40 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
             where('name', '==', sub)
         );
         const snapshot = await getDocs(subQuery);
-        let data;
+        let subData;
         snapshot.forEach((s) => {
-            data = s.data();
-        })
-        setSubSettings(data);
+            subData = {
+                _id: s.id,
+                ...s.data()
+            };
+        });
+        setSubSettings(subData);
+    }
+
+    const checkHasJoinedSub = (subSlice: SubSchema) => {
+        let hasJoined = false;
+        for(const member of subSlice.members) {
+            if(member === user?.email) hasJoined = true;
+        }
+        return hasJoined;
+    }
+
+    const joinSub = async () => {
+        try {
+            if(!user || !subSettings) throw Error;
+            const subSlice = {...subSettings};
+            const hasJoined = checkHasJoinedSub(subSlice);
+            if(!hasJoined) {
+                subSlice.members?.push(user.email);
+            } else {
+                const ind = subSlice.members?.findIndex((m) => m === user.email);
+                subSlice.members?.splice(ind, 1);
+            }
+            await updateDoc(doc(db, 'subs', subSettings._id), subSlice);
+            setSubSettings(subSlice);
+        } catch(err) {
+            console.error(err);
+        }
     }
 
     return(
@@ -45,6 +74,8 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
             && 
             <SubHeader 
                 subSettings={subSettings}
+                checkHasJoinedSub={checkHasJoinedSub}
+                joinSub={joinSub}
             />
             }
             <div className='content' >
@@ -52,6 +83,8 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                 ? 
                 <ComposePost 
                     user={user}
+                    subSettings={subSettings}
+                    checkHasJoinedSub={checkHasJoinedSub}
                 />
                 :
                 <PostContainer 
@@ -60,6 +93,8 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                     subSettings={subSettings}
                     subs={subs}
                     setSubs={setSubs}
+                    joinSub={joinSub}
+                    checkHasJoinedSub={checkHasJoinedSub}
                 />
                 }
                 <GroupSidebar 

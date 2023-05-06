@@ -14,6 +14,8 @@ type Props = {
     subSettings: SubSchema | undefined,
     subs: SubSchema[],
     setSubs: React.Dispatch<React.SetStateAction<SubSchema[]>>,
+    joinSub: (subSlice: SubSchema) => void,
+    checkHasJoinedSub: (subSlice: SubSchema) => boolean,
 }
 
 export default function PostContainer({
@@ -21,7 +23,9 @@ export default function PostContainer({
         user,
         subSettings, 
         subs, 
-        setSubs
+        setSubs,
+        joinSub,
+        checkHasJoinedSub,
     }: Props) {
     const [posts, setPosts] = useState<PostSchema[]>([]);
     
@@ -46,7 +50,6 @@ export default function PostContainer({
             postData.push(newPost);
         });
         setPosts(postData);
-        console.log('a');
     }
 
     const mapPosts = () => {
@@ -59,6 +62,8 @@ export default function PostContainer({
                     setPosts={setPosts}
                     user={user}
                     pageType={pageType} 
+                    joinSub={joinSub}
+                    checkHasJoinedSub={checkHasJoinedSub}
                 />
             )
         })
@@ -66,7 +71,10 @@ export default function PostContainer({
 
     return (
         <div className="post-container" >
-            {(pageType !== 'list' && pageType !== 'submit' && user) && <CreatePostBar />}
+            {(pageType !== 'list' && pageType !== 'submit' && user)
+            && 
+            <CreatePostBar />
+            }
             {pageType !== 'list' && mapPosts()}
             {pageType === 'list' 
             && 

@@ -5,12 +5,15 @@ import 'react-quill/dist/quill.snow.css'
 import { useState } from "react";
 import { db } from "../../RouteSwitch";
 import UserSchema from "../../schemas/user";
+import SubSchema from "../../schemas/sub";
 
 type Props = {
     user: UserSchema | undefined,
+    subSettings: SubSchema | undefined,
+    checkHasJoinedSub: (subSlice: SubSchema) => boolean,
 }
 
-export default function ComposePost({user}: Props) {
+export default function ComposePost({user, subSettings, checkHasJoinedSub}: Props) {
     const { sub } = useParams();
     const [postDetails, setPostDetails] = useState({
         title: '',
@@ -31,9 +34,9 @@ export default function ComposePost({user}: Props) {
 
     const postPost = async () => {
         try {
-            /*eslint-disable-next-line*/
             if(!user) throw console.error('must be signed in');
-            if(!sub) throw console.error("No sub selected to post to!");
+            if(subSettings && !checkHasJoinedSub(subSettings)) throw console.error("Must Join Sub");
+            if(!sub || !subSettings) throw console.error("No sub selected to post to!");
             const newPost = {
                 title: postDetails.title,
                 message: postDetails.post,
