@@ -68,6 +68,27 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
         }
     }
 
+    const updateSubSettings = async (
+        summary: string, 
+        categories: string[],
+        rules: {rule: string, description: string}[]
+    ) => {
+        try {
+            if(!user || !subSettings) throw Error;
+            const subSlice = {...subSettings}
+            const updatedSub = {
+                ...subSlice,
+                summary,
+                categories,
+                rules,
+            }
+            await updateDoc(doc(db, 'subs', subSettings._id), updatedSub);
+            setSubSettings(updatedSub);
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
     return(
         <main className="page" >
             {pageType === 'sub' 
@@ -101,6 +122,7 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                     pageType={pageType}
                     user={user}
                     subSettings={subSettings}
+                    updateSubSettings={updateSubSettings}
                     toggleShowCreateSub={toggleShowCreateSub}
                 />
             </div>

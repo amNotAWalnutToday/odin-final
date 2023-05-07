@@ -8,6 +8,11 @@ type Props = {
     pageType: string,
     user: UserSchema | undefined,
     subSettings: SubSchema | undefined, 
+    updateSubSettings: (
+        summary: string, 
+        categories: string[],
+        rules: {rule: string, description: string}[]
+    ) => void,
     toggleShowCreateSub: () => void,
 }
 
@@ -15,6 +20,7 @@ export default function GroupSidebar({
         pageType, 
         user, 
         subSettings, 
+        updateSubSettings,
         toggleShowCreateSub
     }: Props) {
     return(
@@ -34,6 +40,7 @@ export default function GroupSidebar({
             && 
             <SidebarCard 
                 subSettings={subSettings}
+                updateSubSettings={updateSubSettings}
                 type={'about'}
             />
             }
@@ -41,6 +48,7 @@ export default function GroupSidebar({
             &&
             <SidebarCard
                 subSettings={subSettings}
+                updateSubSettings={undefined}
                 type={'rules'}
             />
             }

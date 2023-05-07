@@ -8,6 +8,7 @@
 
   --border: 1px solid #bbbbbb55;
   --sborder: 0px 0px 1px 1px #bbbbbb55;
+  --shborder: 0px 4px 24px black;
 
   --header-h: 48px;
   --sidebar-w: 270px;
@@ -28,6 +29,16 @@
 
 a {
   color: black;
+}
+
+label {
+  font-weight: bold;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 50px;
+  width: 100% !important;
 }
 
 hr {
@@ -80,7 +91,7 @@ hr {
 .sidebar {
   display: flex;
   width: var(--sidebar-w);
-  height: calc(100vh - var(--header-h));
+  min-height: calc(100vh - var(--header-h));
   background-color: var(--box-bg);
 }
 
@@ -93,6 +104,7 @@ hr {
 .sidebar.sub {
   flex-direction: column;
   gap: 1rem;
+  margin-bottom: 1rem;
   width: 350px;
   background-color: unset;
 }
@@ -176,6 +188,15 @@ hr {
   display: flex;
 }
 
+.list.rules {
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.rules li {
+  padding: 1rem;
+}
+
 .list .card {
   gap: 0rem;
   padding: 0 0.25rem;
@@ -189,6 +210,11 @@ hr {
 .rounded-border {
   border-radius: 9px;
   box-shadow: var(--sborder);
+}
+
+.heavy-border {
+  border-radius: 3px;
+  box-shadow: var(--shborder);
 }
 
 .vpad {
@@ -341,6 +367,7 @@ hr {
   width: 100% !important; 
 }
 
+textarea,
 [type='text'],
 [type=search] {
   height: 38px;
@@ -359,12 +386,14 @@ hr {
   margin: 0;
 }
 
+textarea:hover,
 .btn-input-bg,
 input:hover {
   background-color: var(--box-bg);
   box-shadow: 0px 0px 1px 1px var(--btn-blue)
 }
 
+[type="checkbox"]:hover,
 .dropdown-box li:hover,
 .list .card li:hover,
 .compose-post-btn-grp button:not(:disabled):hover,
@@ -487,8 +516,8 @@ a.pseudo-select {
 
 .default-icon {
   display: inline-block;
-  width: 2em;
-  height: 2em;
+  min-width: 2em;
+  min-height: 2em;
   background-color: #19f;
   border-radius: 50%;
 }

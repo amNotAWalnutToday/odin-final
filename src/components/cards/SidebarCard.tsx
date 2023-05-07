@@ -1,13 +1,25 @@
 import { Timestamp } from 'firebase/firestore';
+import { useContext, useState } from 'react';
 import Details from "../other/Details";
+import EditSub from '../other/EditSub';
+import { UserContext } from '../../RouteSwitch';
 import SubSchema from "../../schemas/sub";
 
 type Props = {
-    subSettings: SubSchema | undefined, 
+    subSettings: SubSchema | undefined,
+    updateSubSettings: ((
+        summary: string, 
+        categories: string[],
+        rules: {rule: string, description: string}[]
+    ) => void) | undefined, 
     type: string,
 }
 
-export default function SidebarCard({subSettings, type}: Props) {
+export default function SidebarCard({subSettings, updateSubSettings, type}: Props) {
+    const { user } = useContext(UserContext);
+    const [canEdit, setCanEdit] = useState<boolean>(false);
+    const toggleCanEdit = () => setCanEdit(!canEdit);
+
     const convertTime = (timestamp: Timestamp | undefined) => {
         const date = timestamp?.toDate().toDateString().split(' ');
         date?.shift();
@@ -56,6 +68,25 @@ export default function SidebarCard({subSettings, type}: Props) {
                         <p className="text-trivial">Online</p>
                     </div>
                 </div>
+                {user?.email === subSettings?.creator
+                && 
+                <div className='card body' style={{padding: '2px'}} >
+                    <hr />
+                    <button 
+                        className='btn btn-input-bg'
+                        onClick={toggleCanEdit}
+                    >
+                        Edit Sub
+                    </button>    
+                    {canEdit
+                    &&
+                    <EditSub
+                        subSettings={subSettings}
+                        updateSubSettings={updateSubSettings}
+                    />
+                    }
+                </div>
+                }
             </div>
         </div>
     ) 
