@@ -5,6 +5,11 @@ type SubSchema = {
     name: string,
     summary: string,
     icon: string,
+    custom: {
+        bannerColor: string, 
+        cardHeaderColor: string, 
+        pageBackground: string
+    }
     categories: string[],
     rules: {rule: string, description: string}[],
     timestamp: Timestamp,

@@ -14,10 +14,16 @@ export default function CreateCommunityForm({toggleShowCreateSub}: Props) {
     
     const createCommunity = async () => {
         try {
+            if(!user) return;
             const newCommunity = {
                 name: communityName,
                 summary: 'Update This Summary Later On The Sub Page Sidebar',
                 icon: '',
+                custom: {
+                    bannerColor: '',
+                    cardHeaderColor: '',
+                    pageBackground: ''
+                },
                 categories: [],
                 rules: [],
                 timestamp: Timestamp.now(),

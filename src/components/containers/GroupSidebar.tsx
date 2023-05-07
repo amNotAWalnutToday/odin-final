@@ -12,7 +12,12 @@ type Props = {
         icon: string,
         summary: string, 
         categories: string[],
-        rules: {rule: string, description: string}[]
+        rules: {rule: string, description: string}[],
+        custom: {
+            bannerColor: string,
+            cardHeaderColor: string,
+            pageBackground: string,
+        }
     ) => void,
     toggleShowCreateSub: () => void,
 }

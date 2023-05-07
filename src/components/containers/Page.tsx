@@ -72,7 +72,8 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
         icon: string,
         summary: string, 
         categories: string[],
-        rules: {rule: string, description: string}[]
+        rules: {rule: string, description: string}[],
+        custom: {bannerColor: string, cardHeaderColor: string, pageBackground: string}
     ) => {
         try {
             if(!user || !subSettings) throw Error;
@@ -83,6 +84,7 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                 summary,
                 categories,
                 rules,
+                custom
             }
             await updateDoc(doc(db, 'subs', subSettings._id), updatedSub);
             setSubSettings(updatedSub);
@@ -92,7 +94,7 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
     }
 
     return(
-        <main className="page" >
+        <main className={`page ${subSettings ? 'custom' : ''}`} style={subSettings && {background: `url(${subSettings?.custom?.pageBackground})`}} >
             {pageType === 'sub' 
             && 
             <SubHeader 

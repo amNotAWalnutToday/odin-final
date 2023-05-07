@@ -8,7 +8,12 @@ type Props = {
         icon: string,
         summary: string, 
         categories: string[],
-        rules: {rule: string, description: string}[]
+        rules: {rule: string, description: string}[],
+        custom: {
+            bannerColor: string,
+            cardHeaderColor: string,
+            pageBackground: string,
+        }
     ) => void) | undefined,
 }
 
@@ -16,15 +21,25 @@ interface SubValues {
     icon: string,
     summary: string,
     categories: string[],
-    rules: {rule: string, description: string}[]
+    rules: {rule: string, description: string}[],
+    custom: {
+        bannerColor: string, 
+        cardHeaderColor: string, 
+        pageBackground: string
+    }
 }
 
 export default function EditSub({subSettings, updateSubSettings}: Props) {
     const [newSubValues, setNewSubValues] = useState<SubValues>({
-        icon: '',
+        icon: subSettings?.icon ?? '',
         summary: subSettings?.summary ?? '',
         categories: subSettings ? [...subSettings.categories] : [],
         rules: subSettings ? [...subSettings.rules] : [],
+        custom: {
+            bannerColor: subSettings?.custom?.bannerColor ?? '',
+            cardHeaderColor: subSettings?.custom?.cardHeaderColor ?? '',
+            pageBackground: subSettings?.custom?.pageBackground ?? '',
+        }
     });
 
     const handleCategoryCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -168,6 +183,48 @@ export default function EditSub({subSettings, updateSubSettings}: Props) {
                     </button>
                 </ul>
             </div>
+            <hr />
+            <div className="line-flex" style={{justifyContent: 'space-between'}}>
+                <label htmlFor="sub-banner-color">Banner Colour</label>
+                <input 
+                    id='sub-banner-color'
+                    type="color" 
+                    onChange={(e) => {
+                        const subvalues = {...newSubValues};
+                        subvalues.custom.bannerColor = e.target.value;
+                        setNewSubValues(subvalues);
+                    }}
+                    value={newSubValues.custom.bannerColor}
+                />
+            </div>
+            <div className="line-flex" style={{justifyContent: 'space-between'}} >
+                <label htmlFor="sub-card-header-color">Card Header Colour</label>
+                <input 
+                    id="sub-card-header-color"
+                    type="color" 
+                    onChange={(e) => {
+                        const subvalues = {...newSubValues};
+                        subvalues.custom.cardHeaderColor = e.target.value;
+                        setNewSubValues(subvalues);
+                    }}
+                    value={newSubValues.custom.cardHeaderColor}
+                />
+            </div>
+            <div>
+                <label htmlFor="sub-page-background">Page Background Image Link</label>
+                <input
+                    id="sub-page-background"
+                    className="border" 
+                    type="text" 
+                    placeholder="e.g. link from imgur"
+                    onChange={(e) => {
+                        const subvalues = {...newSubValues};
+                        subvalues.custom.pageBackground = e.target.value;
+                        setNewSubValues(subvalues);
+                    }}
+                    value={newSubValues.custom.pageBackground}
+                />
+            </div>
             <button
                 className="btn orange-bg"
                 onClick={() => {
@@ -177,7 +234,8 @@ export default function EditSub({subSettings, updateSubSettings}: Props) {
                             newSubValues.icon,
                             newSubValues.summary, 
                             newSubValues.categories, 
-                            newSubValues.rules
+                            newSubValues.rules,
+                            newSubValues.custom
                         )
                 }}
             >

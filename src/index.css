@@ -3,6 +3,7 @@
   --box-bg: #fff;
   --bar-bg: rgb(248 249 250);
   --btn-blue: #0079d3;
+  --icon-blue: #19f;
   --underlay-bg: #111111cc;
   --orange: #d93a00;
 
@@ -71,21 +72,21 @@ hr {
   justify-content: center;
   align-items: flex-start;
   padding: 0 1rem;
-  background-color: mediumseagreen;
+  background-color: var(--btn-blue);
   height: var(--header-h);
 }
 
-.header.sub::before {
+.banner {
   content: ' ';
   display: block;
   width: 100%;
   height: 80px;
   padding: 10px;
-  background-color: springgreen;
 }
 
 .header.sub {
-  height: 200px;
+  padding-top: 1rem;
+  height: 120px;
 }
 
 .sidebar {
@@ -109,6 +110,10 @@ hr {
   background-color: unset;
 }
 
+.sidebar.sub * {
+  white-space: pre-line;
+}
+
 .main {
   position: fixed;
   z-index: 1;
@@ -124,6 +129,12 @@ hr {
   background-color: var(--page-bg);
   grid-row: 2 / 3;
   grid-column: 2 / 3;
+}
+
+.page.custom {
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+  background-size: cover !important;
 }
 
 .content {
@@ -536,7 +547,7 @@ a.pseudo-select {
   display: inline-block;
   min-width: 2em;
   height: 2em;
-  background-color: #19f;
+  background-color: var(--icon-blue);
   border-radius: 50%;
 }
 

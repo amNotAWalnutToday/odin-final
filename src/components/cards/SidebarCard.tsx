@@ -11,7 +11,12 @@ type Props = {
         icon: string,
         summary: string, 
         categories: string[],
-        rules: {rule: string, description: string}[]
+        rules: {rule: string, description: string}[],
+        custom: {
+            bannerColor: string,
+            cardHeaderColor: string,
+            pageBackground: string,
+        }
     ) => void) | undefined, 
     type: string,
 }
@@ -50,10 +55,13 @@ export default function SidebarCard({subSettings, updateSubSettings, type}: Prop
 
     return type === 'about' ? (
         <div className="card border">
-            <div className="header card " >
+            <div 
+                className="header card "
+                style={{backgroundColor: `${subSettings?.custom?.cardHeaderColor}`}}
+            >
                 <h4 className="text-imp" >About Community</h4>
             </div>
-            <div className="card body" >
+            <div className="card body">
                 {subSettings?.summary}
                 <p className='text-trivial' >Created {convertTime(subSettings?.timestamp)}</p>
                 <p>r/{subSettings?.name.replace(' ', '')} topics</p>
@@ -94,7 +102,10 @@ export default function SidebarCard({subSettings, updateSubSettings, type}: Prop
     : type === 'rules' && subSettings?.rules
         ? 
         <div className="card border">
-            <div className="header card">
+            <div 
+                className="header card"
+                style={{backgroundColor: `${subSettings?.custom?.cardHeaderColor}`}} 
+            >
                 <h4 className="text-imp">r/{subSettings?.name.replace(' ', '')} Rules</h4>
             </div>
             <ul className="card body">
