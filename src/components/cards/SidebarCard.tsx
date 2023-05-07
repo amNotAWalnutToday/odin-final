@@ -8,6 +8,7 @@ import SubSchema from "../../schemas/sub";
 type Props = {
     subSettings: SubSchema | undefined,
     updateSubSettings: ((
+        icon: string,
         summary: string, 
         categories: string[],
         rules: {rule: string, description: string}[]
@@ -68,7 +69,7 @@ export default function SidebarCard({subSettings, updateSubSettings, type}: Prop
                         <p className="text-trivial">Online</p>
                     </div>
                 </div>
-                {user?.email === subSettings?.creator
+                {(user && user?.email === subSettings?.creator)
                 && 
                 <div className='card body' style={{padding: '2px'}} >
                     <hr />

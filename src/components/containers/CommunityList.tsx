@@ -35,9 +35,18 @@ export default function CommunityList({subs, setSubs}: Props) {
         return subs.map((sub, ind) => {
             return (
                 <li className='sub-link' key={ind}>
-                    <span className='default-icon' />{' '}
+                    {!sub.icon 
+                    ? <span className='default-icon' />
+                    : 
+                    <img 
+                        className="default-icon" 
+                        src={`${sub.icon}`} 
+                        alt="" 
+                        onError={() => <span className='default-icon' />} 
+                    />
+                    }
                     <span style={{alignSelf: 'center'}}>
-                        r/{sub.name.replace(' ', '')}
+                        {' '}r/{sub.name.replace(' ', '')}
                         <span className='summary' >
                             {sub.members.length} members
                         </span>

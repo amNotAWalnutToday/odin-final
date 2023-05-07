@@ -9,9 +9,21 @@ type Props = {
 export default function SubHeader({subSettings, checkHasJoinedSub, joinSub}: Props) {
     return(
         <div className="header sub" style={{flexDirection: 'column'}} >
-            <div style={{alignSelf: 'flex-start', marginLeft: '8rem'}} >
+            <div style={{alignSelf: 'flex-start', marginLeft: '18rem'}} >
                 <div className="line-flex" style={{gap: '3rem'}} >
-                    <h2>{subSettings?.name}</h2>
+                    <div className="line-flex" >
+                        {!subSettings?.icon 
+                            ? <div className="default-icon icon-big"/>
+                            : 
+                            <img 
+                                className="default-icon icon-big" 
+                                src={`${subSettings?.icon}`} 
+                                alt="" 
+                                onError={() => <div className="default-icon icon-big"/>} 
+                            />
+                        }
+                        <h2>{subSettings?.name}</h2>
+                    </div>
                     {subSettings && !checkHasJoinedSub(subSettings)
                     ? 
                     <button

@@ -5,6 +5,7 @@ import Categories from '../../data/categories.json';
 type Props = {
     subSettings: SubSchema | undefined,
     updateSubSettings: ((
+        icon: string,
         summary: string, 
         categories: string[],
         rules: {rule: string, description: string}[]
@@ -12,6 +13,7 @@ type Props = {
 }
 
 interface SubValues {
+    icon: string,
     summary: string,
     categories: string[],
     rules: {rule: string, description: string}[]
@@ -19,6 +21,7 @@ interface SubValues {
 
 export default function EditSub({subSettings, updateSubSettings}: Props) {
     const [newSubValues, setNewSubValues] = useState<SubValues>({
+        icon: '',
         summary: subSettings?.summary ?? '',
         categories: subSettings ? [...subSettings.categories] : [],
         rules: subSettings ? [...subSettings.rules] : [],
@@ -56,7 +59,9 @@ export default function EditSub({subSettings, updateSubSettings}: Props) {
                     <label
                         className="text-trivial" 
                         htmlFor={`category_${category.group}`}
-                    >{category.group}</label>
+                    >
+                        {category.group}
+                    </label>
                     <input
                         id={`category_${category.group}`}
                         type="checkbox"
@@ -74,20 +79,22 @@ export default function EditSub({subSettings, updateSubSettings}: Props) {
             return(
                 <li key={ind} className="heavy-border list rules">
                     <div>
-                        <label htmlFor="">{ind + 1}. Title</label>
+                        <label htmlFor={`rule-r-${ind}`}>{ind + 1}. Rule Title</label>
                         <input 
                             id={`rule-r-${ind}`}
                             className="border"
                             type="text" 
+                            placeholder="Summarise rule.."
                             onChange={(e) => handleRuleInput(e, true)}
                             value={newSubValues.rules[ind].rule}
                         />
                     </div>
                     <div>
-                        <label htmlFor="">{ind + 1}. Description</label>
+                        <label htmlFor={`rule-d-${ind}`}>{ind + 1}. Description</label>
                         <textarea
                             id={`rule-d-${ind}`}
                             className="border"
+                            placeholder="Explain the rule in full.."
                             onChange={(e) => handleRuleInput(e, false)}
                             value={newSubValues.rules[ind].description}
                         />
@@ -111,11 +118,27 @@ export default function EditSub({subSettings, updateSubSettings}: Props) {
     return(
         <div className="card body" >
             <hr />
+            <div>
+                <label htmlFor="sub-icon-input">Sub Icon Image Link</label>
+                <input
+                    id="sub-icon-input"
+                    className="border" 
+                    type="text" 
+                    placeholder="e.g. link from imgur"
+                    onChange={(e) => {
+                        const subvalues = {...newSubValues};
+                        subvalues.icon = e.target.value;
+                        setNewSubValues(subvalues);
+                    }}
+                    value={newSubValues.icon}
+                />
+            </div>
             <div className="card" style={{overflow: 'visible'}} >
                 <label htmlFor="sub-summary">Summary</label>
                 <textarea
                     id="sub-summary"
                     className="border"
+                    placeholder="Enter a description about the sub.."
                     onChange={(e) => {
                         const subvalues = {...newSubValues};
                         subvalues.summary = e.target.value;
@@ -147,7 +170,16 @@ export default function EditSub({subSettings, updateSubSettings}: Props) {
             </div>
             <button
                 className="btn orange-bg"
-                onClick={() => (newSubValues && updateSubSettings) && updateSubSettings(newSubValues.summary, newSubValues.categories, newSubValues.rules)}
+                onClick={() => {
+                    (newSubValues && updateSubSettings) 
+                        && 
+                        updateSubSettings(
+                            newSubValues.icon,
+                            newSubValues.summary, 
+                            newSubValues.categories, 
+                            newSubValues.rules
+                        )
+                }}
             >
                 Confirm Update
             </button>

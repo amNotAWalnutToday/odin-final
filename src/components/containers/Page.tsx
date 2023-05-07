@@ -69,6 +69,7 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
     }
 
     const updateSubSettings = async (
+        icon: string,
         summary: string, 
         categories: string[],
         rules: {rule: string, description: string}[]
@@ -78,6 +79,7 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
             const subSlice = {...subSettings}
             const updatedSub = {
                 ...subSlice,
+                icon,
                 summary,
                 categories,
                 rules,

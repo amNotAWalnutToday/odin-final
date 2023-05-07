@@ -9,6 +9,7 @@ type Props = {
     user: UserSchema | undefined,
     subSettings: SubSchema | undefined, 
     updateSubSettings: (
+        icon: string,
         summary: string, 
         categories: string[],
         rules: {rule: string, description: string}[]

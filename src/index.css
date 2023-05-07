@@ -440,7 +440,7 @@ a.pseudo-select {
   position: fixed;
   background-color: var(--underlay-bg);
   width: 100vw;
-  height: 100vw;
+  height: 100%;
   z-index: 5;
 }
 
@@ -522,6 +522,14 @@ a.pseudo-select {
   background-size: contain;
   background-repeat: no-repeat;
   filter: invert();
+}
+
+.icon-big {
+  position: absolute;
+  min-width: 6em !important;
+  min-height: 6em;
+  transform: translateX(-105px);
+  border: 12px solid white;
 }
 
 .default-icon {
