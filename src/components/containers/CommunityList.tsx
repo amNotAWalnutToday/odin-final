@@ -39,12 +39,12 @@ export default function CommunityList({subs, setSubs}: Props) {
                     <span style={{alignSelf: 'center'}}>
                         r/{sub.name.replace(' ', '')}
                         <span className='summary' >
-                            0 members
+                            {sub.members.length} members
                         </span>
                         <span className='summary' >
                             {sub.summary}
                         </span>
-                        <Link to={`/r/${sub.name}`}>
+                        <Link className='text-link' to={`/r/${sub.name}`}>
                             Visit
                         </Link>
                     </span>

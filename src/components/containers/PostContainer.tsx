@@ -1,4 +1,11 @@
-import { query, getDocs, collection, where } from 'firebase/firestore';
+import { 
+    query,
+    getDocs, 
+    collection, 
+    where, 
+    limit, 
+    orderBy 
+} from 'firebase/firestore';
 import { db } from '../../RouteSwitch';
 import { useEffect, useState } from 'react';
 import Post from '../cards/Post';
@@ -35,13 +42,25 @@ export default function PostContainer({
     }, [pageType, subSettings]);
 
     const getPosts = async () => {
-        if(pageType !== 'sub' || !subSettings) return setPosts([]);
-        const postQuery = query(
-            collection(db, 'posts'),
-            where('parent', '==', subSettings?.name)
-        );
+        if((pageType !== 'sub' && pageType !== 'home')) return setPosts([]);
+        let postQuery;
+        if(pageType === 'home') {
+            postQuery = query(
+                collection(db, 'posts'),
+                limit(50),
+                orderBy("timestamp", 'desc')
+            )
+        } else {
+            if(!subSettings) return setPosts([]);
+            postQuery = query(
+                collection(db, 'posts'),
+                where('parent', '==', subSettings?.name),
+                limit(100),
+                orderBy("timestamp", 'desc'),
+            );
+        }
         const snapshot = await getDocs(postQuery);
-        const postData: any[] = [];
+        let postData: any[] = [];
         snapshot.forEach((post) => {
             const newPost = {
                 _id: post.id,
@@ -49,7 +68,24 @@ export default function PostContainer({
             };
             postData.push(newPost);
         });
+        if(pageType === 'home') postData = sortPostsByUpvotes(postData);
         setPosts(postData);
+    }
+
+    const sumVotes = (post: PostSchema):number => {
+        let [upv, downv] = [0, 0];
+        for(const vote of post.upvotes) {
+            vote.isUpvote ? upv++ : downv++
+        }
+        return upv - downv;
+    } 
+
+    const sortPostsByUpvotes = (postsSlice: PostSchema[]) => {
+        return postsSlice.sort((a, b) => {
+            const votesA = sumVotes(a);
+            const votesB = sumVotes(b);
+            return votesB > votesA ? 1 : -1
+        });
     }
 
     const mapPosts = () => {
@@ -62,6 +98,7 @@ export default function PostContainer({
                     setPosts={setPosts}
                     user={user}
                     pageType={pageType} 
+                    sumVotes={sumVotes}
                     joinSub={joinSub}
                     checkHasJoinedSub={checkHasJoinedSub}
                 />

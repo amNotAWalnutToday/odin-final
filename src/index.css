@@ -349,6 +349,15 @@ hr {
   font-weight: bold;
 }
 
+.text-imp-b {
+  color: black;
+  font-weight: bold;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
 .text-trivial,
 .summary {
   display: block;
@@ -393,6 +402,7 @@ input:hover {
   box-shadow: 0px 0px 1px 1px var(--btn-blue)
 }
 
+.text-link:hover,
 [type="checkbox"]:hover,
 .dropdown-box li:hover,
 .list .card li:hover,
@@ -517,7 +527,7 @@ a.pseudo-select {
 .default-icon {
   display: inline-block;
   min-width: 2em;
-  min-height: 2em;
+  height: 2em;
   background-color: #19f;
   border-radius: 50%;
 }

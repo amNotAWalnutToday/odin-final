@@ -1,4 +1,13 @@
-import { updateDoc, doc, Timestamp, collection, where, getDocs, query } from 'firebase/firestore';
+import { 
+    updateDoc, 
+    doc, 
+    Timestamp, 
+    collection, 
+    where, 
+    getDocs, 
+    query 
+} from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 import PostSchema from "../../schemas/post";
 import { Vote } from '../../schemas/post';
@@ -12,6 +21,7 @@ type Props = {
     setPosts: React.Dispatch<React.SetStateAction<PostSchema[]>>,
     user: UserSchema | undefined,
     pageType: string,
+    sumVotes: (post: PostSchema) => number,
     joinSub: (subSlice: SubSchema) => void,
     checkHasJoinedSub: (subSlice: SubSchema) => boolean,
 }
@@ -22,9 +32,12 @@ export default function Post({
         setPosts, 
         user, 
         pageType,
+        sumVotes,
         joinSub,
         checkHasJoinedSub,
     }: Props) {
+    const navigate = useNavigate();
+
     const convertTime = (timestamp: Timestamp | undefined) => {
         const date = timestamp?.toDate().toDateString().split(' ');
         date?.shift();
@@ -70,14 +83,6 @@ export default function Post({
             console.error(err);
         }
     }
-    
-    const sumVotes = ():number => {
-        let [upv, downv] = [0, 0];
-        for(const vote of post.upvotes) {
-            vote.isUpvote ? upv++ : downv++
-        }
-        return upv - downv;
-    } 
 
     /*eslint-disable-next-line*/
     const populateParent = async () => {
@@ -104,7 +109,7 @@ export default function Post({
                     className={`arrow-thick rot90 ${checkIfUpvote() === 'upvote' ? 'pseudo-select' : ''}`} 
                     onClick={() => handleVote(true)} 
                 />
-                <b>{sumVotes()}</b>
+                <b>{sumVotes(post)}</b>
                 <button
                     className={`arrow-thick rot270 ${checkIfUpvote() === 'downvote' ? 'pseudo-select' : ''}`} 
                     onClick={() => handleVote(false)} 
@@ -114,8 +119,11 @@ export default function Post({
                 <div className="post-top">
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <p className="text-trivial" style={{fontSize: '0.8em'}} >
-                            <span style={{color: 'black', fontWeight: 'bold'}}>
-                                {pageType !== 'sub' && `sub/${post.parent.replace(' ', '')} `}
+                            <span 
+                                className='text-imp-b text-link' 
+                                onClick={() => navigate(`r/${post.parent}`)}
+                            >
+                                {pageType !== 'sub' && `r/${post.parent.replace(' ', '')} `}
                             </span> 
                             posted by {`u/${post.poster}`} {`on ${convertTime(post.timestamp)}`}</p>
                     </div>
