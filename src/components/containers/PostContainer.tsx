@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore';
 import { db } from '../../RouteSwitch';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Post from '../cards/Post';
 import CommunityList from './CommunityList';
 import CreatePostBar from '../other/CreatePostBar';
@@ -38,6 +39,8 @@ export default function PostContainer({
     const [posts, setPosts] = useState<PostSchema[]>([]);
     const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
     const [lastVisible, setLastVisible] = useState<any>();
+
+    const { username } = useParams();
     
     useEffect(() => {
         getPosts();
@@ -58,7 +61,7 @@ export default function PostContainer({
             } else if(pageType === 'user') {
                 postQuery = query(
                     FSCol, limitNum, order,
-                    where("poster", "==", user?.name)
+                    where("poster", "==", username)
                 );
             } else {
                 postQuery = query(
@@ -72,7 +75,7 @@ export default function PostContainer({
             } else if(pageType === 'user') {
                 postQuery = query(
                     FSCol, limitNum, order, startAfter(lastVisible),
-                    where("poster", "==", user?.name)
+                    where("poster", "==", username)
                 );
             } else {
                 postQuery = query(

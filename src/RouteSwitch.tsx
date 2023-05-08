@@ -100,7 +100,7 @@ export default function RouteSwitch() {
                         }
                     />
                     <Route
-                        path='/u/:user'
+                        path='/u/:username'
                         element={
                             <App
                                 pageType='user'
