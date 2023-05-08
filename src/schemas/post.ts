@@ -14,6 +14,7 @@ type PostSchema = {
     timestamp: Timestamp,
     parent: string,
     poster: UserSchema,
+    isLink: boolean,
 }
 
 export default PostSchema;

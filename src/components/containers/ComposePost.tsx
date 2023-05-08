@@ -1,5 +1,5 @@
 import { Timestamp, addDoc, collection } from "firebase/firestore";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
 import { useState } from "react";
@@ -16,7 +16,9 @@ type Props = {
 }
 
 export default function ComposePost({pageType, user, subSettings, checkHasJoinedSub}: Props) {
+    const navigate = useNavigate();
     const { sub } = useParams();
+    const [tab, setTab] = useState<string>('post');
     const [postDetails, setPostDetails] = useState({
         title: '',
         post: ''
@@ -41,14 +43,17 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
             if(!sub || !subSettings) throw console.error("No sub selected to post to!");
             const newPost = {
                 title: postDetails.title,
-                message: postDetails.post,
+                message: tab === 'link' 
+                    ? `<a href=${[postDetails.post]}>${postDetails.post}</a>` 
+                    : postDetails.post,
                 upvotes: [],
                 timestamp: Timestamp.now(),
                 parent: sub,
                 poster: user.name,
+                isLink: tab === 'link'
             }
-            const postRef = await addDoc(collection(db, "posts"), newPost);
-            console.log('Post sent Successful!', postRef.id);
+            await addDoc(collection(db, "posts"), newPost);
+            navigate(`/r/${subSettings.name}`);
         } catch(e) {
             console.error(e, 'Could not Post');
         }
@@ -62,9 +67,19 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
             <div className="post-container" >
                 <div style={{padding: '0'}} className="card body rounded-border">
                     <div className="compose-post-btn-grp" >
-                        <button>Post</button>
+                        <button 
+                            className={tab === 'post' ? 'pseudo-select' : '' }
+                            onClick={() => setTab('post')}
+                        >
+                            Post
+                        </button>
                         <button disabled>Image & Video</button>
-                        <button disabled>Link</button>
+                        <button 
+                            className={tab === 'link' ? 'pseudo-select': '' }
+                            onClick={() => setTab('link')}
+                        >
+                            Link
+                        </button>
                         <button disabled>Poll</button>
                     </div>
                     <div className="post-main body">
@@ -75,11 +90,22 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
                             placeholder='Title'
                             onChange={(e) => titleHandler(e)}
                         />
+                        {tab === 'post'
+                        &&
                         <ReactQuill 
                             className="htmlrevert"
                             placeholder="Text(required)"
                             onChange={postHandler}
                         />
+                        }
+                        {tab === 'link'
+                        &&
+                        <textarea 
+                            className="border"
+                            placeholder="E.g link from imgur, it will show the link and the image"
+                            onChange={(e) => postHandler(e.target.value)}
+                        />
+                        }
                         <button 
                             style={{alignSelf: 'flex-end'}}
                             className="btn flair" 

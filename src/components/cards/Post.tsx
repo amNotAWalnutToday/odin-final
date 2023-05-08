@@ -102,6 +102,13 @@ export default function Post({
         }
     }
 
+    const removeAnchors = (text: string) => {
+        const a1 = text.split(">")[1];
+        if(!a1) return; 
+        const a2 = a1.split('<')[0];
+        return a2;
+    }
+
     return(
         <div className="post border" >
             <div className="rating-bar">
@@ -138,6 +145,14 @@ export default function Post({
                 </div>
                 <div className='htmlrevert' >
                     {parse(post.message)}
+                    {post.isLink
+                    &&
+                    <img 
+                        className='post-img' 
+                        src={removeAnchors(post.message)} 
+                        alt="" 
+                    />
+                    }
                 </div>
                 <div className="post-bottom">
                     <span>ico </span>

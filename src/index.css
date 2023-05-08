@@ -390,11 +390,6 @@ hr {
   font-weight: bold;
 }
 
-.dropdown-li:hover,
-.text-link:hover {
-  text-decoration: underline;
-}
-
 .text-trivial,
 .summary {
   display: block;
@@ -487,6 +482,10 @@ a.pseudo-select {
   background-color: var(--page-bg);
 }
 
+.compose-post-btn-grp .pseudo-select {
+  border-bottom: 4px solid var(--icon-blue);
+}
+
 .popup {
   position: fixed;
   top: 25%;
@@ -540,6 +539,14 @@ a.pseudo-select {
   resize: both;
 }
 
+.htmlrevert {
+  white-space: normal;
+}
+
+.htmlrevert a {
+  color: #19f;
+}
+
 .htmlrevert ul li {
   list-style-type: disc;
 }
@@ -552,6 +559,9 @@ a.pseudo-select {
   margin-left: 2.5rem;
 }
 
+.htmlrevert a:hover,
+.dropdown-li:hover,
+.text-link:hover,
 .htmlrevert u {
   text-decoration: underline;
 }
@@ -589,6 +599,10 @@ a.pseudo-select {
   background-size: contain;
   background-repeat: no-repeat;
   filter: invert();
+}
+
+.post-img {
+  max-width: 75%;
 }
 
 .icon-big {
