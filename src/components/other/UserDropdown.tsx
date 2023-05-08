@@ -1,4 +1,5 @@
 import { signOut } from "firebase/auth"
+import { useNavigate } from 'react-router-dom';
 import { auth } from "../../RouteSwitch"
 import UserSchema from "../../schemas/user"
 
@@ -8,6 +9,8 @@ type Props = {
 }
 
 export default function UserDropdown({user, setUser}: Props) {    
+    const navigate = useNavigate();
+    
     const signOutUser = async () => {
         try {
             if(!user) throw Error;
@@ -22,7 +25,7 @@ export default function UserDropdown({user, setUser}: Props) {
     return user ? (
         <div className="border dropdown-box nav" >
             <ul>
-                <li>{user.name}</li>
+                <li onClick={() => navigate(`/u/${user.name}`)} >{user.name}</li>
                 <li onClick={signOutUser} >Log Out</li>
             </ul>
         </div>

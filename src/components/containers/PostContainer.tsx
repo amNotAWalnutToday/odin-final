@@ -44,62 +44,76 @@ export default function PostContainer({
         /*eslint-disable-next-line*/
     }, [pageType, subSettings]);
 
-    const getPosts = async () => {
-        if((pageType !== 'sub' && pageType !== 'home')) return setPosts([]);
-        let postQuery;
-        if(pageType === 'home') {
-            postQuery = query(
-                collection(db, 'posts'),
-                limit(10),
-                orderBy("timestamp", 'desc')
-            )
+    const getPostQuery = (isFirst: boolean) => {
+        const [FSCol, limitNum, order] = [
+            collection(db, 'posts'),
+            limit(10),
+            orderBy('timestamp', 'desc'),
+        ];
+        let postQuery = query(FSCol);
+
+        if(isFirst) {
+            if(pageType === 'home') {
+                postQuery = query(FSCol, limitNum, order);
+            } else if(pageType === 'user') {
+                postQuery = query(
+                    FSCol, limitNum, order,
+                    where("poster", "==", user?.name)
+                );
+            } else {
+                postQuery = query(
+                    FSCol, limitNum, order,
+                    where("parent", "==", subSettings?.name)
+                );
+            }
         } else {
-            if(!subSettings) return setPosts([]);
-            postQuery = query(
-                collection(db, 'posts'),
-                where('parent', '==', subSettings?.name),
-                limit(10),
-                orderBy("timestamp", 'desc'),
-            );
+            if(pageType === 'home') {
+                postQuery = query(FSCol, limitNum, order, startAfter(lastVisible));
+            } else if(pageType === 'user') {
+                postQuery = query(
+                    FSCol, limitNum, order, startAfter(lastVisible),
+                    where("poster", "==", user?.name)
+                );
+            } else {
+                postQuery = query(
+                    FSCol, limitNum, order, startAfter(lastVisible),
+                    where("parent", "==", subSettings?.name)
+                );
+            }
         }
-        const snapshot = await getDocs(postQuery);
-        setLastVisible(snapshot.docs[snapshot.docs.length - 1])
+        return postQuery;
+    }
+
+    const getPosts = async () => {
         let postData: any[] = [];
-        snapshot.forEach((post) => {
-            const newPost = {
-                _id: post.id,
-                ...post.data()
-            };
-            postData.push(newPost);
-        });
-        if(pageType === 'home') postData = sortPostsByUpvotes(postData);
-        setPosts(postData);
-        
-        postData.length < 10 
-            ? setCanLoadMore(false)
-            : setCanLoadMore(true);
+        try {
+            if((pageType !== 'sub' && pageType !== 'home' && pageType !== 'user')) return setPosts([]);
+            if(pageType === 'sub' && !subSettings) return setPosts([]);
+            const postQuery = getPostQuery(true);
+            const snapshot = await getDocs(postQuery);
+            setLastVisible(snapshot.docs[snapshot.docs.length - 1])
+            snapshot.forEach((post) => {
+                const newPost = {
+                    _id: post.id,
+                    ...post.data()
+                };
+                postData.push(newPost);
+            });
+            if(pageType === 'home') postData = sortPostsByUpvotes(postData);
+            setPosts(postData);
+        } catch(err) {
+            console.error(err);
+        } finally {
+            postData.length < 10 
+                ? setCanLoadMore(false)
+                : setCanLoadMore(true);
+        }
     }
 
     const loadMorePosts = async () => {
         try {
             const updatedPosts = [...posts];
-            let postQuery;
-            if(pageType === 'home') {
-                postQuery = query(
-                    collection(db, 'posts'),
-                    limit(10),
-                    orderBy('timestamp', 'desc'),
-                    startAfter(lastVisible),
-                );
-            } else {
-                postQuery = query(
-                    collection(db, 'posts'),
-                    where('parent', '==', subSettings?.name),
-                    limit(10),
-                    orderBy("timestamp", "desc"),
-                    startAfter(lastVisible),
-                );
-            }
+            const postQuery = getPostQuery(false);
             const snapshot = await getDocs(postQuery);
             setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
             let postData: any = [];
@@ -162,7 +176,7 @@ export default function PostContainer({
                 setSubs={setSubs}
             />
             }
-            {(pageType !== 'list' && canLoadMore)
+            {(pageType !== 'list' &&  canLoadMore)
             &&
             <button 
                 className='btn orange-bg'

@@ -99,6 +99,15 @@ export default function RouteSwitch() {
                             />
                         }
                     />
+                    <Route
+                        path='/u/:user'
+                        element={
+                            <App
+                                pageType='user'
+                                {...appProps}
+                            />
+                        }
+                    />
                 </Routes>
             </UserContext.Provider>
         </Router>
