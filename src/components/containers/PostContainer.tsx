@@ -4,7 +4,8 @@ import {
     collection, 
     where, 
     limit, 
-    orderBy 
+    orderBy,
+    startAfter,
 } from 'firebase/firestore';
 import { db } from '../../RouteSwitch';
 import { useEffect, useState } from 'react';
@@ -35,6 +36,8 @@ export default function PostContainer({
         checkHasJoinedSub,
     }: Props) {
     const [posts, setPosts] = useState<PostSchema[]>([]);
+    const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
+    const [lastVisible, setLastVisible] = useState<any>();
     
     useEffect(() => {
         getPosts();
@@ -47,7 +50,7 @@ export default function PostContainer({
         if(pageType === 'home') {
             postQuery = query(
                 collection(db, 'posts'),
-                limit(50),
+                limit(10),
                 orderBy("timestamp", 'desc')
             )
         } else {
@@ -55,11 +58,12 @@ export default function PostContainer({
             postQuery = query(
                 collection(db, 'posts'),
                 where('parent', '==', subSettings?.name),
-                limit(100),
+                limit(10),
                 orderBy("timestamp", 'desc'),
             );
         }
         const snapshot = await getDocs(postQuery);
+        setLastVisible(snapshot.docs[snapshot.docs.length - 1])
         let postData: any[] = [];
         snapshot.forEach((post) => {
             const newPost = {
@@ -70,6 +74,40 @@ export default function PostContainer({
         });
         if(pageType === 'home') postData = sortPostsByUpvotes(postData);
         setPosts(postData);
+    }
+
+    const loadMorePosts = async () => {
+        try {
+            const updatedPosts = [...posts];
+            let postQuery;
+            if(pageType === 'home') {
+                postQuery = query(
+                    collection(db, 'posts'),
+                    limit(10),
+                    orderBy('timestamp', 'desc'),
+                    startAfter(lastVisible),
+                );
+            } else {
+                postQuery = query(
+                    collection(db, 'posts'),
+                    where('parent', '==', subSettings?.name),
+                    limit(10),
+                    orderBy("timestamp", "desc"),
+                    startAfter(lastVisible),
+                );
+            }
+            const snapshot = await getDocs(postQuery);
+            setLastVisible(snapshot.docs[snapshot.docs.length - 1]);
+            let postData: any = [];
+            snapshot.forEach((post) => {
+                postData.push(post.data());
+            });
+            postData.forEach((post: PostSchema) => updatedPosts.push(post));
+            if(pageType === 'home') postData = sortPostsByUpvotes(postData);
+            setPosts(updatedPosts);
+        } catch(err) {
+            setCanLoadMore(false);
+        }
     }
 
     const sumVotes = (post: PostSchema):number => {
@@ -120,6 +158,14 @@ export default function PostContainer({
                 setSubs={setSubs}
             />
             }
+            {(pageType !== 'list' && canLoadMore)
+            &&
+            <button 
+                className='btn orange-bg'
+                onClick={loadMorePosts}
+            >
+                Load More
+            </button>}
         </div>
     )
 }
