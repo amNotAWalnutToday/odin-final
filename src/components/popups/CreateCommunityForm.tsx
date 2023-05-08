@@ -20,7 +20,7 @@ export default function CreateCommunityForm({toggleShowCreateSub}: Props) {
                 summary: 'Update This Summary Later On The Sub Page Sidebar',
                 icon: '',
                 custom: {
-                    bannerColor: '',
+                    bannerColor: '#1199ff',
                     cardHeaderColor: '',
                     pageBackground: ''
                 },

@@ -1,3 +1,7 @@
+import { doc, deleteDoc } from "firebase/firestore"
+import { useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import { db, UserContext } from "../../RouteSwitch"
 import SubSchema from "../../schemas/sub"
 
 type Props = {
@@ -7,6 +11,19 @@ type Props = {
 }
 
 export default function SubHeader({subSettings, checkHasJoinedSub, joinSub}: Props) {
+    const navigate = useNavigate();
+    const { user } = useContext(UserContext);
+    
+    const disbandSub = async () => {
+        try {
+            if(!subSettings || !user || user.email !== subSettings.creator) return;
+            await deleteDoc(doc(db, 'subs', subSettings?._id));
+            navigate('/');
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
     return(
         <>
             <div 
@@ -38,19 +55,26 @@ export default function SubHeader({subSettings, checkHasJoinedSub, joinSub}: Pro
                             Join
                         </button>
                         :
+                        subSettings?.creator === user?.email
+                        ?
+                        <button  
+                            className="btn crimson-bg"
+                            onClick={disbandSub}
+                        >
+                            Disband
+                        </button>
+                        :
                         <button
                             className="btn btn-input-bg"
                             onClick={joinSub}
                         >
                             Joined
                         </button>
+
                         }
                     </div>
                     <p className="text-trivial">r/{subSettings?.name.replace(' ', '')}</p>
                 </div>
-                <nav>
-                    <button>Posts</button>
-                </nav>
             </div>
         </>
     )

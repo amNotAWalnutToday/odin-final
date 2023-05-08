@@ -6,6 +6,7 @@
   --icon-blue: #19f;
   --underlay-bg: #111111cc;
   --orange: #d93a00;
+  --crimson: crimson;
 
   --border: 1px solid #bbbbbb55;
   --sborder: 0px 0px 1px 1px #bbbbbb55;
@@ -483,7 +484,11 @@ a.pseudo-select {
 }
 
 .orange-bg {
-  background-color: #d93a00;
+  background-color: var(--orange);
+}
+
+.crimson-bg {
+  background-color: var(--crimson);
 }
 
 .quill {
