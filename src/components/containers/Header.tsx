@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import UserDropdown from '../other/UserDropdown';
 import { useState } from 'react';
+import SearchBar from '../other/SearchBar';
 import UserSchema from '../../schemas/user';
 
 type Props = {
@@ -19,9 +20,8 @@ export default function Header({user, setUser, toggleLoginForm}: Props) {
                 <span className='logo'/>
                 <h1 style={{fontSize: '24px'}} ><Link to='/'>replicatedit</Link></h1>
             </div>
-            <input 
-                type="search" 
-                placeholder='Search replicatedit'
+            <SearchBar 
+                
             />
             <div className='line-flex' >
                 {!user 
