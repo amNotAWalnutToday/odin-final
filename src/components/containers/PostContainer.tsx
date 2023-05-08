@@ -74,6 +74,10 @@ export default function PostContainer({
         });
         if(pageType === 'home') postData = sortPostsByUpvotes(postData);
         setPosts(postData);
+        
+        postData.length < 10 
+            ? setCanLoadMore(false)
+            : setCanLoadMore(true);
     }
 
     const loadMorePosts = async () => {
