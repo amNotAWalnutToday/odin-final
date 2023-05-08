@@ -167,7 +167,8 @@ export default function PostContainer({
 
     return (
         <div className="post-container" >
-            {(pageType !== 'list' && pageType !== 'submit' && user)
+            {(pageType !== 'list' && pageType !== 'submit' 
+            && pageType !== 'user' && user)
             && 
             <CreatePostBar />
             }

@@ -1,6 +1,7 @@
 import SidebarCard from "../cards/SidebarCard"
 import HomeSidebarCard from "../cards/HomeSidebarCard";
 import PolicySidebarCard from "../cards/PolicySidebarCard";
+import ProfileSidebarCard from "../cards/ProfileSidebarCard";
 import SubSchema from "../../schemas/sub"
 import UserSchema from "../../schemas/user";
 
@@ -39,7 +40,14 @@ export default function GroupSidebar({
             }
             {pageType === 'home'
             &&
-            <PolicySidebarCard/>
+            <PolicySidebarCard />
+            }
+
+            {pageType === 'user'
+            &&
+            <ProfileSidebarCard 
+                pageType={pageType}
+            />
             }
 
             {subSettings 

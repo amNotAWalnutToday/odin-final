@@ -9,7 +9,7 @@
 
   --border: 1px solid #bbbbbb55;
   --sborder: 0px 0px 1px 1px #bbbbbb55;
-  --shborder: 0px 4px 24px black;
+  --shborder: 0px 8px 14px black;
 
   --header-h: 48px;
   --sidebar-w: 270px;
@@ -213,6 +213,11 @@ hr {
   padding: 0 0.25rem;
 }
 
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .border {
   border-radius: 3px;
   box-shadow: var(--sborder);
@@ -236,10 +241,6 @@ hr {
 .flair {
   padding: 0.25rem 0.75rem !important;
   width: fit-content;
-}
-
-.bar {
-  
 }
 
 .btn {
@@ -311,6 +312,27 @@ hr {
   background-color: var(--box-bg);
 }
 
+.dropdown-li {
+  width: 100% !important;
+  white-space: pre !important;
+}
+
+.dropdown {
+  flex-direction: column;
+  width: 50%;
+  margin-bottom: 1rem;
+  background-color: var(--box-bg);
+}
+
+.dropdown-bar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 0;
+  white-space: normal;
+}
+
 .sub-link {
   display: flex;
   align-items: flex-start;
@@ -332,6 +354,7 @@ hr {
   font-size: 0.7em;
 }
 
+.dropdown-li,
 .dropdown-box li,
 .sidebar.main a {
   display: block;
@@ -344,6 +367,7 @@ hr {
 .sidebar.main a:not(.pseudo-select):hover {
   background-color: var(--bar-bg);
 }
+
 
 .sidebar .details {
   display: flex;
@@ -365,6 +389,7 @@ hr {
   font-weight: bold;
 }
 
+.dropdown-li:hover,
 .text-link:hover {
   text-decoration: underline;
 }
@@ -406,6 +431,7 @@ textarea,
   margin: 0;
 }
 
+.dropdown-li:hover,
 textarea:hover,
 .btn-input-bg,
 input:hover {
@@ -413,6 +439,7 @@ input:hover {
   box-shadow: 0px 0px 1px 1px var(--btn-blue)
 }
 
+.dropdown-li:hover,
 .text-link:hover,
 [type="checkbox"]:hover,
 .dropdown-box li:hover,

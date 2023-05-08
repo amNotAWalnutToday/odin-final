@@ -94,7 +94,16 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
     }
 
     return(
-        <main className={`page ${subSettings ? 'custom' : ''}`} style={subSettings && {background: `url(${subSettings?.custom?.pageBackground})`}} >
+        <main 
+            className={`page ${subSettings ? 'custom' : ''}`} 
+            style={
+                subSettings?.custom?.pageBackground 
+                ? 
+                {background: `url(${subSettings?.custom?.pageBackground})`}
+                : 
+                {}
+            } 
+        >
             {pageType === 'sub' 
             && 
             <SubHeader 
@@ -107,6 +116,7 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                 {pageType === 'submit'
                 ? 
                 <ComposePost 
+                    pageType={pageType}
                     user={user}
                     subSettings={subSettings}
                     checkHasJoinedSub={checkHasJoinedSub}

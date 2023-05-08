@@ -4,16 +4,18 @@ import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
 import { useState } from "react";
 import { db } from "../../RouteSwitch";
+import SubDropdown from "../other/SubDropdown";
 import UserSchema from "../../schemas/user";
 import SubSchema from "../../schemas/sub";
 
 type Props = {
+    pageType: string,
     user: UserSchema | undefined,
     subSettings: SubSchema | undefined,
     checkHasJoinedSub: (subSlice: SubSchema) => boolean,
 }
 
-export default function ComposePost({user, subSettings, checkHasJoinedSub}: Props) {
+export default function ComposePost({pageType, user, subSettings, checkHasJoinedSub}: Props) {
     const { sub } = useParams();
     const [postDetails, setPostDetails] = useState({
         title: '',
@@ -54,6 +56,9 @@ export default function ComposePost({user, subSettings, checkHasJoinedSub}: Prop
 
     return(
         <div>
+            <SubDropdown 
+                pageType={pageType}
+            />
             <div className="post-container" >
                 <div style={{padding: '0'}} className="card body rounded-border">
                     <div className="compose-post-btn-grp" >

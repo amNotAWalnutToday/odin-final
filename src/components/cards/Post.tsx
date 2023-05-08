@@ -121,11 +121,18 @@ export default function Post({
                         <p className="text-trivial" style={{fontSize: '0.8em'}} >
                             <span 
                                 className='text-imp-b text-link' 
-                                onClick={() => navigate(`r/${post.parent}`)}
+                                onClick={() => navigate(`/r/${post.parent}`)}
                             >
                                 {pageType !== 'sub' && `r/${post.parent.replace(' ', '')} `}
                             </span> 
-                            posted by {`u/${post.poster}`} {`on ${convertTime(post.timestamp)}`}</p>
+                            {'posted by '} 
+                            <span 
+                                className='text-link'
+                                onClick={() => navigate(`/u/${post.poster}`)}
+                            >
+                                {`u/${post.poster}`} 
+                            </span>
+                            {` on ${convertTime(post.timestamp)}`}</p>
                     </div>
                     <h3>{post.title}</h3>
                 </div>
