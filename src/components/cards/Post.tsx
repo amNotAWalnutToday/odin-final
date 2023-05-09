@@ -123,7 +123,7 @@ export default function Post({
                 />
             </div>
             <div 
-                className="post-main" 
+                className={`post-main ${pageType !== 'post' ? 'hover' : ''}`} 
                 onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
             >
                 <div className="post-top">
@@ -146,7 +146,9 @@ export default function Post({
                     </div>
                     <h3>{post.title}</h3>
                 </div>
-                <div className='htmlrevert' >
+                <div 
+                    className={`htmlrevert ${pageType !== 'post' ? 'post-fixed' : ''}`} 
+                >
                     {parse(post.message)}
                     {post.isLink
                     &&
@@ -158,8 +160,10 @@ export default function Post({
                     }                    
                 </div>
                 <div className="post-bottom">
-                    <span>ico </span>
-                    <button>000 Comments</button>
+                    <p className='text-trivial text-link' >
+                        <span>ico </span>
+                        {post?.amountOfComments ?? 0} Comments
+                    </p>
                 </div>
             </div>
         </div>

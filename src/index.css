@@ -154,6 +154,10 @@ hr {
   /*background-color: #63111111;*/
 }
 
+.post-fixed {
+  max-height: 400px; 
+}
+
 .bar,
 .card,
 .post {
@@ -181,8 +185,13 @@ hr {
   justify-content: space-between;
   gap: 1rem;
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem 0rem 1rem;
   background-color: var(--box-bg);
+}
+
+.post-bottom {
+  background-color: var(--box-bg);
+  padding: 0.5rem 0;
 }
 
 .rating-bar {
@@ -459,6 +468,7 @@ input:hover {
   border-bottom: none;
 }
 
+.hover:hover,
 .dropdown-li:hover,
 .text-link:hover,
 [type="checkbox"]:hover,

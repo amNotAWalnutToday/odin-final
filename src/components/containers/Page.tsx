@@ -118,6 +118,8 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                 <ComposePost 
                     pageType={pageType}
                     user={user}
+                    postForComments={undefined}
+                    setPosts={undefined}
                     subSettings={subSettings}
                     checkHasJoinedSub={checkHasJoinedSub}
                 />

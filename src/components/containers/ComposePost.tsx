@@ -1,4 +1,4 @@
-import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { Timestamp, addDoc, updateDoc, collection, doc } from "firebase/firestore";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill"
 import 'react-quill/dist/quill.snow.css'
@@ -7,15 +7,25 @@ import { db } from "../../RouteSwitch";
 import SubDropdown from "../other/SubDropdown";
 import UserSchema from "../../schemas/user";
 import SubSchema from "../../schemas/sub";
+import PostSchema from "../../schemas/post";
 
 type Props = {
     pageType: string,
     user: UserSchema | undefined,
+    postForComments: PostSchema | undefined,
+    setPosts: React.Dispatch<React.SetStateAction<PostSchema[]>> | undefined,
     subSettings: SubSchema | undefined,
     checkHasJoinedSub: (subSlice: SubSchema) => boolean,
 }
 
-export default function ComposePost({pageType, user, subSettings, checkHasJoinedSub}: Props) {
+export default function ComposePost({
+        pageType, 
+        user,
+        postForComments,
+        setPosts, 
+        subSettings, 
+        checkHasJoinedSub
+    }: Props) {
     const navigate = useNavigate();
     const { sub, post } = useParams();
     const [tab, setTab] = useState<string>('post');
@@ -64,7 +74,7 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
         try {
             if(!user) throw console.error('must be signed in');
             if(subSettings && !checkHasJoinedSub(subSettings)) throw console.error("Must Join Sub");
-            if(pageType !== 'post' || !post) throw console.error('no post to comment to');
+            if(pageType !== 'post' || !post || !postForComments) throw console.error('no post to comment to');
             const newComment = {
                 message: postDetails.post,
                 upvotesRef: [],
@@ -73,7 +83,15 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
                 parent: post,
                 poster: user.name
             }
+            const selectedPost = {
+                ...postForComments,
+                amountOfComments: postForComments.amountOfComments
+                    ? (postForComments.amountOfComments + 1)
+                    : 0 + 1
+            }
             await addDoc(collection(db, `posts/${post}/comments`), newComment);
+            await updateDoc(doc(db, 'posts',  postForComments._id), selectedPost);
+            setPosts && setPosts([selectedPost]);
         } catch(err) {
             console.error(err, 'Could not Comment');
         }
