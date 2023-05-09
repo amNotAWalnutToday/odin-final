@@ -45,8 +45,8 @@ export default function RouteSwitch() {
     }
 
     useEffect(() => {
-        setTimeout(() => {
-            if(auth.currentUser) relog(auth.currentUser.email);
+        setTimeout(async() => {
+            if(auth.currentUser) await relog(auth.currentUser.email);
         }, 1000);
     }, []);
 

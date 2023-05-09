@@ -152,7 +152,7 @@ export default function Post({
                         src={removeAnchors(post.message)} 
                         alt="" 
                     />
-                    }
+                    }                    
                 </div>
                 <div className="post-bottom">
                     <span>ico </span>

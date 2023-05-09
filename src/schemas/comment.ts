@@ -1,21 +1,14 @@
 import { Timestamp } from "firebase/firestore";
+import { Vote } from "./post";
 import UserSchema from "./user";
 
-export interface Vote {
-    user: string,
-    isUpvote: boolean,
-}
-
-type PostSchema = {
+type CommentSchema = {
     _id: string,
-    title: string,
     message: string,
     upvotes: Vote[],
     timestamp: Timestamp,
     parent: string,
     poster: UserSchema,
-    isLink: boolean,
-    amountOfComments: number,
 }
 
-export default PostSchema;
+export default CommentSchema;

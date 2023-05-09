@@ -50,7 +50,8 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
                 timestamp: Timestamp.now(),
                 parent: sub,
                 poster: user.name,
-                isLink: tab === 'link'
+                isLink: tab === 'link',
+                amountOfComments: 0,
             }
             await addDoc(collection(db, "posts"), newPost);
             navigate(`/r/${subSettings.name}`);
