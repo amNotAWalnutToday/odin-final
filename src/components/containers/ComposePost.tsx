@@ -17,7 +17,7 @@ type Props = {
 
 export default function ComposePost({pageType, user, subSettings, checkHasJoinedSub}: Props) {
     const navigate = useNavigate();
-    const { sub } = useParams();
+    const { sub, post } = useParams();
     const [tab, setTab] = useState<string>('post');
     const [postDetails, setPostDetails] = useState({
         title: '',
@@ -60,6 +60,25 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
         }
     }
 
+    const sendComment = async () => {
+        try {
+            if(!user) throw console.error('must be signed in');
+            if(subSettings && !checkHasJoinedSub(subSettings)) throw console.error("Must Join Sub");
+            if(pageType !== 'post' || !post) throw console.error('no post to comment to');
+            const newComment = {
+                message: postDetails.post,
+                upvotesRef: [],
+                upvotesNum: 0,
+                timestamp: Timestamp.now(),
+                parent: post,
+                poster: user.name
+            }
+            await addDoc(collection(db, `posts/${post}/comments`), newComment);
+        } catch(err) {
+            console.error(err, 'Could not Comment');
+        }
+    }
+
     return(
         <div>
             <SubDropdown 
@@ -67,6 +86,8 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
             />
             <div className="post-container" >
                 <div style={{padding: '0'}} className="card body rounded-border">
+                    {pageType !== 'post'
+                    &&
                     <div className="compose-post-btn-grp" >
                         <button 
                             className={tab === 'post' ? 'pseudo-select' : '' }
@@ -83,14 +104,17 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
                         </button>
                         <button disabled>Poll</button>
                     </div>
+                    }
                     <div className="post-main body">
+                        {pageType !== 'post'
+                        &&
                         <input
                             style={{backgroundColor: 'var(--box-bg)'}}
                             className="border"
                             type="text"
                             placeholder='Title'
                             onChange={(e) => titleHandler(e)}
-                        />
+                        />}
                         {tab === 'post'
                         &&
                         <ReactQuill 
@@ -110,9 +134,9 @@ export default function ComposePost({pageType, user, subSettings, checkHasJoined
                         <button 
                             style={{alignSelf: 'flex-end'}}
                             className="btn flair" 
-                            onClick={postPost}
+                            onClick={pageType === 'submit' ? postPost : sendComment}
                         >
-                            Post
+                            {pageType === 'submit' ? 'Post' : 'Reply'}
                         </button>
                     </div>
                     <div 

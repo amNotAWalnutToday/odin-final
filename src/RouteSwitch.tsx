@@ -108,6 +108,15 @@ export default function RouteSwitch() {
                             />
                         }
                     />
+                    <Route
+                        path='/r/:sub/:post/comments'
+                        element={
+                            <App
+                                pageType='post'
+                                {...appProps}
+                            />
+                        }
+                    />
                 </Routes>
             </UserContext.Provider>
         </Router>

@@ -1,5 +1,7 @@
 import { 
     query,
+    doc,
+    getDoc,
     getDocs, 
     collection, 
     where, 
@@ -13,6 +15,7 @@ import { useParams } from 'react-router-dom';
 import Post from '../cards/Post';
 import CommunityList from './CommunityList';
 import CreatePostBar from '../other/CreatePostBar';
+import CommentContainer from './CommentContainer';
 import SubSchema from '../../schemas/sub';
 import PostSchema from '../../schemas/post';
 import UserSchema from '../../schemas/user';
@@ -40,9 +43,10 @@ export default function PostContainer({
     const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
     const [lastVisible, setLastVisible] = useState<any>();
 
-    const { username } = useParams();
+    const { username, post } = useParams();
     
     useEffect(() => {
+        if(pageType === 'post') getSinglePost();
         getPosts();
         /*eslint-disable-next-line*/
     }, [pageType, subSettings]);
@@ -85,6 +89,17 @@ export default function PostContainer({
             }
         }
         return postQuery;
+    }
+
+    const getSinglePost = async () => {
+        try {
+            if(pageType !== 'post' || !post) return;
+            const mainPost = await getDoc(doc(db, 'posts', post));
+            const postData: any = { _id: mainPost.id, ...mainPost.data()};
+            setPosts([postData]);
+        } catch(err) {
+            console.error(err);
+        }
     }
 
     const getPosts = async () => {
@@ -168,7 +183,7 @@ export default function PostContainer({
     return (
         <div className="post-container" >
             {(pageType !== 'list' && pageType !== 'submit' 
-            && pageType !== 'user' && user)
+            && pageType !== 'user' && pageType !== 'post' && user)
             && 
             <CreatePostBar />
             }
@@ -188,6 +203,12 @@ export default function PostContainer({
             >
                 Load More
             </button>}
+            <CommentContainer 
+                pageType={pageType}
+                user={user}
+                subSettings={subSettings}
+                checkHasJoinedSub={checkHasJoinedSub}
+            />
         </div>
     )
 }

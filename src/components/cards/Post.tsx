@@ -122,7 +122,10 @@ export default function Post({
                     onClick={() => handleVote(false)} 
                 />
             </div>
-            <div className="post-main">
+            <div 
+                className="post-main" 
+                onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
+            >
                 <div className="post-top">
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <p className="text-trivial" style={{fontSize: '0.8em'}} >

@@ -56,6 +56,7 @@ export default function SubDropdown({pageType}: Props) {
 
     return(
         <div 
+            style={pageType === 'post' ? {display: 'none'} : {}}
             className={`flex-col border ${pageType === 'submit' && 'dropdown'}`} 
             onMouseLeave={() => setIsOpen(false)}
         >

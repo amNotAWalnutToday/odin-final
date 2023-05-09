@@ -5,7 +5,8 @@ import UserSchema from "./user";
 type CommentSchema = {
     _id: string,
     message: string,
-    upvotes: Vote[],
+    upvotesRef: Vote[],
+    upvotesNum: number, 
     timestamp: Timestamp,
     parent: string,
     poster: UserSchema,
