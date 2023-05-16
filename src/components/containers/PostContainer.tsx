@@ -18,6 +18,7 @@ import CreatePostBar from '../other/CreatePostBar';
 import CommentContainer from './CommentContainer';
 import SubSchema from '../../schemas/sub';
 import PostSchema from '../../schemas/post';
+import { Vote } from '../../schemas/post';
 import UserSchema from '../../schemas/user';
 
 type Props = {
@@ -146,6 +147,15 @@ export default function PostContainer({
         }
     }
 
+    const checkIfUpvote = (votes: Vote[]) => {
+        if(!user) return '';
+        for(const voter of votes) {
+            if(voter.user === user.email) {
+                return voter.isUpvote ? 'upvote' : 'downvote';
+            }
+        }
+    }
+
     const sumVotes = (post: PostSchema):number => {
         let [upv, downv] = [0, 0];
         for(const vote of post.upvotes) {
@@ -175,6 +185,7 @@ export default function PostContainer({
                     sumVotes={sumVotes}
                     joinSub={joinSub}
                     checkHasJoinedSub={checkHasJoinedSub}
+                    checkIfUpvote={checkIfUpvote}
                 />
             )
         })
@@ -203,6 +214,8 @@ export default function PostContainer({
             >
                 Load More
             </button>}
+            {pageType === 'post'
+            &&
             <CommentContainer 
                 pageType={pageType}
                 user={user}
@@ -210,7 +223,9 @@ export default function PostContainer({
                 setPosts={setPosts}
                 subSettings={subSettings}
                 checkHasJoinedSub={checkHasJoinedSub}
+                checkIfUpvote={checkIfUpvote}
             />
+            }
         </div>
     )
 }

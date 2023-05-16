@@ -9,9 +9,10 @@ import {
 } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
+import RatingBar from '../other/RatingBar';
+import { db } from '../../RouteSwitch';
 import PostSchema from "../../schemas/post";
 import { Vote } from '../../schemas/post';
-import { db } from '../../RouteSwitch';
 import UserSchema from '../../schemas/user';
 import SubSchema from '../../schemas/sub';
 
@@ -24,6 +25,7 @@ type Props = {
     sumVotes: (post: PostSchema) => number,
     joinSub: (subSlice: SubSchema) => void,
     checkHasJoinedSub: (subSlice: SubSchema) => boolean,
+    checkIfUpvote: (votes: Vote[]) => "" | "upvote" | "downvote" | undefined
 }
 
 export default function Post({
@@ -35,6 +37,7 @@ export default function Post({
         sumVotes,
         joinSub,
         checkHasJoinedSub,
+        checkIfUpvote,
     }: Props) {
     const navigate = useNavigate();
 
@@ -51,16 +54,6 @@ export default function Post({
         if(!user) return false;
         for(const voter of upvotes) {
             if(voter.user === user.email) return true;
-        }
-    }
-
-    const checkIfUpvote = () => {
-        if(!user) return '';
-        const upvotes = post.upvotes;
-        for(const voter of upvotes) {
-            if(voter.user === user.email) {
-                return voter.isUpvote ? 'upvote' : 'downvote';
-            }
         }
     }
     
@@ -112,17 +105,20 @@ export default function Post({
 
     return(
         <div className="post border" >
-            <div className="rating-bar">
-                <button 
-                    className={`arrow-thick rot90 ${checkIfUpvote() === 'upvote' ? 'pseudo-select' : ''}`} 
-                    onClick={() => handleVote(true)} 
-                />
-                <b>{sumVotes(post)}</b>
-                <button
-                    className={`arrow-thick rot270 ${checkIfUpvote() === 'downvote' ? 'pseudo-select' : ''}`} 
-                    onClick={() => handleVote(false)} 
-                />
-            </div>
+            <RatingBar
+                post={post}
+                comment={undefined}
+                handleVote={handleVote}
+                sumVotes={sumVotes}
+                checkIfUpvote={checkIfUpvote}
+                barSettings={{
+                    isVertical: true, 
+                    replyBtn: {
+                        hasBtn: false, 
+                        btnClick: undefined
+                    }
+                }}
+            />
             <div 
                 className={`post-main ${pageType !== 'post' ? 'hover' : ''}`} 
                 onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
@@ -161,8 +157,8 @@ export default function Post({
                     }                    
                 </div>
                 <div className="post-bottom">
-                    <p className='text-trivial text-link' >
-                        <span>ico </span>
+                    <p className='text-trivial text-link line-flex' >
+                        <span className="reply-btn-icon" />
                         {post?.amountOfComments ?? 0} Comments
                     </p>
                     <div className='fadeout'></div>

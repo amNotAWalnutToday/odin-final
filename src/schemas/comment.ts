@@ -1,6 +1,5 @@
 import { Timestamp } from "firebase/firestore";
 import { Vote } from "./post";
-import UserSchema from "./user";
 
 type CommentSchema = {
     _id: string,
@@ -9,7 +8,7 @@ type CommentSchema = {
     upvotesNum: number, 
     timestamp: Timestamp,
     parent: string,
-    poster: UserSchema,
+    poster: string,
 }
 
 export default CommentSchema;

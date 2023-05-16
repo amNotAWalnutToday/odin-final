@@ -11,6 +11,7 @@ import { db } from '../../RouteSwitch';
 import UserSchema from "../../schemas/user"
 import SubSchema from "../../schemas/sub"
 import PostSchema from '../../schemas/post';
+import { Vote } from '../../schemas/post';
 import CommentSchema from '../../schemas/comment';
 
 type Props = {
@@ -20,6 +21,7 @@ type Props = {
     setPosts: React.Dispatch<React.SetStateAction<PostSchema[]>>,
     subSettings: SubSchema | undefined,
     checkHasJoinedSub: (subSlice: SubSchema) => boolean,
+    checkIfUpvote: (votes: Vote[]) => "" | "upvote" | "downvote" | undefined
 }
 
 export default function CommentContainer({
@@ -28,11 +30,12 @@ export default function CommentContainer({
         postForComments, 
         setPosts,
         subSettings,
-        checkHasJoinedSub
+        checkHasJoinedSub,
+        checkIfUpvote,
     }: Props) {
-    const { sub, post } = useParams();
+    const { post } = useParams();
     
-    const [viewableComments, setViewableComments] = useState<CommentSchema[]>(); 
+    const [viewableComments, setViewableComments] = useState<CommentSchema[]>([]); 
     const [isPosting, setIsPosting] = useState<boolean>(false);
     const commentUrl = `posts/${post}/comments`;
     const composePostProps = {
@@ -48,13 +51,12 @@ export default function CommentContainer({
 
     useEffect(() => {
         getComments(commentUrl, setViewableComments);
-        console.log(post);
         /*eslint-disable-next-line*/
     }, [post, isPosting]);
 
     const getComments = async (
         queryUrl: string, 
-        setter: React.Dispatch<React.SetStateAction<CommentSchema[] | undefined>>
+        setter: React.Dispatch<React.SetStateAction<CommentSchema[]>>
     ) => {
         setIsPosting(false);
         const commentQuery = query(
@@ -68,16 +70,22 @@ export default function CommentContainer({
         setter(commentData);
     }
 
-    const mapComments = (mappableComments: CommentSchema[]) => {
+    const mapComments = (
+        mappableComments: CommentSchema[],
+        setter: React.Dispatch<React.SetStateAction<CommentSchema[]>>
+    ) => {
         return mappableComments.map((comment, ind) => {
             return (
                 <Comment 
                     key={`comment-${ind}`}
                     comment={comment}
+                    comments={mappableComments}
+                    setComments={setter}
                     commentUrl={commentUrl}
                     getComments={getComments}
                     mapComments={mapComments}
                     composePostProps={composePostProps}
+                    checkIfUpvote={checkIfUpvote}
                 />
             )
         })
@@ -89,7 +97,7 @@ export default function CommentContainer({
                 {...composePostProps}
             ></ComposePost>
             <div className="post-container comment-container comment-list hpad" style={{alignSelf: 'flex-start'}}>
-                {mapComments(viewableComments ?? [])}
+                {mapComments(viewableComments ?? [], setViewableComments)}
             </div>
         </div>
     )
