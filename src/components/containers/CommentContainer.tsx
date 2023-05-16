@@ -72,6 +72,7 @@ export default function CommentContainer({
 
     const mapComments = (
         mappableComments: CommentSchema[],
+        updatedCommentUrl: string,
         setter: React.Dispatch<React.SetStateAction<CommentSchema[]>>
     ) => {
         return mappableComments.map((comment, ind) => {
@@ -81,7 +82,7 @@ export default function CommentContainer({
                     comment={comment}
                     comments={mappableComments}
                     setComments={setter}
-                    commentUrl={commentUrl}
+                    commentUrl={updatedCommentUrl}
                     getComments={getComments}
                     mapComments={mapComments}
                     composePostProps={composePostProps}
@@ -97,7 +98,11 @@ export default function CommentContainer({
                 {...composePostProps}
             ></ComposePost>
             <div className="post-container comment-container comment-list hpad" style={{alignSelf: 'flex-start'}}>
-                {mapComments(viewableComments ?? [], setViewableComments)}
+                {mapComments(
+                    viewableComments ?? [],
+                    commentUrl, 
+                    setViewableComments,
+                )}
             </div>
         </div>
     )

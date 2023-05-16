@@ -19,6 +19,7 @@ type Props = {
     ) => Promise<void>,
     mapComments: (
         mappableComments: CommentSchema[], 
+        updatedCommentUrl: string,
         setter: React.Dispatch<React.SetStateAction<CommentSchema[]>>
     ) => JSX.Element[],
     composePostProps: ComposePostProps,
@@ -142,7 +143,11 @@ export default function Comment({
             <div 
                 className="comment-list flex-col"
             >
-                {mapComments(viewableComments ?? [], setViewableComments)}
+                {mapComments(
+                    viewableComments ?? [], 
+                    updatedCommentUrl,
+                    setViewableComments,
+                )}
             </div>
         </div>
     )
