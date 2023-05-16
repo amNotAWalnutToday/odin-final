@@ -9,13 +9,17 @@ import UserSchema from "../../schemas/user";
 import SubSchema from "../../schemas/sub";
 import PostSchema from "../../schemas/post";
 
-type Props = {
+export type Props = {
     pageType: string,
     user: UserSchema | undefined,
     postForComments: PostSchema | undefined,
     setPosts: React.Dispatch<React.SetStateAction<PostSchema[]>> | undefined,
     subSettings: SubSchema | undefined,
     checkHasJoinedSub: (subSlice: SubSchema) => boolean,
+    commentUrl: string | undefined,
+    setIsPosting: React.Dispatch<React.SetStateAction<boolean>> 
+        | ((bool: boolean) => void)
+        | undefined,
 }
 
 export default function ComposePost({
@@ -24,7 +28,9 @@ export default function ComposePost({
         postForComments,
         setPosts, 
         subSettings, 
-        checkHasJoinedSub
+        checkHasJoinedSub,
+        commentUrl,
+        setIsPosting,
     }: Props) {
     const navigate = useNavigate();
     const { sub, post } = useParams();
@@ -89,9 +95,10 @@ export default function ComposePost({
                     ? (postForComments.amountOfComments + 1)
                     : 0 + 1
             }
-            await addDoc(collection(db, `posts/${post}/comments`), newComment);
+            await addDoc(collection(db, commentUrl ?? `posts/${post}/comments`), newComment);
             await updateDoc(doc(db, 'posts',  postForComments._id), selectedPost);
             setPosts && setPosts([selectedPost]);
+            setIsPosting && setIsPosting(true);
         } catch(err) {
             console.error(err, 'Could not Comment');
         }

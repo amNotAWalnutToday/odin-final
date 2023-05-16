@@ -44,6 +44,7 @@ export default function Post({
         return date?.join(' ');
         // change later,  this is a duplicate function from sidebarCard.tsx */
         // should check for how long ago the message was posted             */
+        // comment needs a copy of this when done                           */ 
     }
 
     const checkForVoter = (upvotes: Vote[]) => {

@@ -206,7 +206,7 @@ export default function PostContainer({
             <CommentContainer 
                 pageType={pageType}
                 user={user}
-                post={posts[0]}
+                postForComments={posts[0]}
                 setPosts={setPosts}
                 subSettings={subSettings}
                 checkHasJoinedSub={checkHasJoinedSub}

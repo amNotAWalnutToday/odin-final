@@ -122,6 +122,8 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                     setPosts={undefined}
                     subSettings={subSettings}
                     checkHasJoinedSub={checkHasJoinedSub}
+                    commentUrl={undefined}
+                    setIsPosting={undefined}
                 />
                 :
                 <PostContainer 
