@@ -645,6 +645,13 @@ a.pseudo-select {
   transform: rotate(270deg);
 }
 
+.fadeout {
+  width: 140%;
+  background: linear-gradient(#ffffff66, #33333366);
+  height: 300%;
+  transform: translate(-1.5%, -150%);
+}
+
 .logo {
   display: inline-block;
   width: 2.3em;

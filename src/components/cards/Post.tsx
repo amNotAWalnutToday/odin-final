@@ -165,6 +165,7 @@ export default function Post({
                         <span>ico </span>
                         {post?.amountOfComments ?? 0} Comments
                     </p>
+                    <div className='fadeout'></div>
                 </div>
             </div>
         </div>
