@@ -7,6 +7,7 @@ import {
     getDocs, 
     query 
 } from 'firebase/firestore';
+import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 import RatingBar from '../other/RatingBar';
@@ -40,6 +41,15 @@ export default function Post({
         checkIfUpvote,
     }: Props) {
     const navigate = useNavigate();
+    const postElementRef = useRef<HTMLDivElement>(null);
+    const [shouldFade, setShouldFade] = useState<boolean>(false);
+
+    useEffect(() => {
+        const postHeight = postElementRef.current?.offsetHeight ?? 0;
+        postHeight > 399 
+            ? setShouldFade(true)
+            : setShouldFade(false);
+    }, []);
 
     const convertTime = (timestamp: Timestamp | undefined) => {
         const date = timestamp?.toDate().toDateString().split(' ');
@@ -120,6 +130,7 @@ export default function Post({
                 }}
             />
             <div 
+                ref={postElementRef}
                 className={`post-main ${pageType !== 'post' ? 'hover' : ''}`} 
                 onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
             >
@@ -161,7 +172,7 @@ export default function Post({
                         <span className="reply-btn-icon" />
                         {post?.amountOfComments ?? 0} Comments
                     </p>
-                    <div className='fadeout'></div>
+                    {shouldFade && <div className='fadeout' />}
                 </div>
             </div>
         </div>
