@@ -6,5 +6,37 @@
     {
         "group": "Programming",
         "url": "/t/programming"
+    },
+    {
+        "group": "Anime",
+        "url": "/t/anime"
+    },
+    {
+        "group": "Technology",
+        "url": "/t/technology"
+    },
+    {
+        "group": "Science",
+        "url": "/t/science"
+    },
+    {
+        "group": "Learning and Education",
+        "url": "/t/learning%20and%20education"
+    },
+    {
+        "group": "Art",
+        "url": "/t/art"
+    },
+    {
+        "group": "Music",
+        "url": "/t/music"
+    },
+    {
+        "group": "Crafts and Diy",
+        "url": "/t/crafts%20and%20diy"
+    },
+    {
+        "group": "Food and Drink",
+        "url": "/t/food%20and%20drink"
     }
 ]
