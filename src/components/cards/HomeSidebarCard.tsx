@@ -9,14 +9,14 @@ export default function HomeSidebarCard({toggleShowCreateSub}: Props) {
     
     return(
         <div className="card border">
-            <div className="header card">
+            <div className="header orange-bg card ">
             </div>
             <div className="card body">
                 <h4>Home</h4>
                 <p>Your personal Replicatedit frontpage. Come here to check in with your favourite communties</p>
                 <hr />
                 <button 
-                    className="btn"
+                    className="btn orange-bg"
                     onClick={() => navigate('./submit')}
                 >
                     Create Post

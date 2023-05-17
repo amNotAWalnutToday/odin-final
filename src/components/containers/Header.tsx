@@ -8,9 +8,11 @@ type Props = {
     user: UserSchema | undefined,
     setUser: React.Dispatch<React.SetStateAction<UserSchema | undefined>>,
     toggleLoginForm: () => void,
+    isDarkMode: boolean,
+    setIsDarkMode: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export default function Header({user, setUser, toggleLoginForm}: Props) {
+export default function Header({user, setUser, toggleLoginForm, isDarkMode, setIsDarkMode}: Props) {
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
     const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
@@ -42,6 +44,8 @@ export default function Header({user, setUser, toggleLoginForm}: Props) {
                 <UserDropdown 
                     user={user}
                     setUser={setUser} 
+                    isDarkMode={isDarkMode}
+                    setIsDarkMode={setIsDarkMode}
                 />}
             </div>
         </header>

@@ -24,6 +24,8 @@ export default function App({pageType, user, setUser}: Props) {
   const [canLogin, setCanLogin] = useState<boolean>(false);
   const toggleCanLogin = () => setCanLogin(!canLogin);
 
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
   useEffect(() => {
     if(window.localStorage.getItem('emailForSignIn') && !user) {
       toggleLoginForm();
@@ -39,12 +41,20 @@ export default function App({pageType, user, setUser}: Props) {
     /*eslint-disable-next-line*/
   }, [user]);
 
+  useEffect(() => {
+    if(window.localStorage.getItem("darkmode")) {
+      setIsDarkMode(() => true);
+    }
+  }, [isDarkMode]);
+
   return (
-    <div className="App">
+    <div className={`App ${isDarkMode ? 'dark' : ''}`}>
       <Header
         user={user}
         setUser={setUser}
         toggleLoginForm={toggleLoginForm}
+        isDarkMode={isDarkMode}
+        setIsDarkMode={setIsDarkMode}
       />
       <MainSidebar />
       <Page 

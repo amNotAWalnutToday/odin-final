@@ -1,23 +1,39 @@
 :root {
   --page-bg: #dae0e6;
+  --font-color: #000;
+  --font-imp-white: #fff;
+  --font-imp-black: #000;
   --box-bg: #fff;
   --bar-bg: rgb(248 249 250);
   --bar-fade-bg: rgba(248, 249, 250, 0.8);
   --btn-blue: #0079d3;
   --icon-blue: #19f;
   --underlay-bg: #111111cc;
+  --shadow-color: #bbbbbb55;
   --orange: #d93a00;
   --crimson: crimson;
 
-  --border: 1px solid #bbbbbb55;
-  --sborder: 0px 0px 1px 1px #bbbbbb55;
+  --border: 1px solid var(--shadow-color);
+  --sborder: 0px 0px 1px 1px var(--shadow-color);
   --shborder: 0px 8px 14px black;
 
   --header-h: 48px;
   --sidebar-w: 270px;
 }
 
-*,
+.dark {
+  --page-bg: #111;
+  --font-color: #fff;
+  --font-imp-white: #000;
+  --font-imp-black: #fff;
+  --box-bg: #222;
+  --bar-bg: #222;
+  --bar-fade-bg: #22222299;
+  --btn-blue: #d93a00;
+  --icon-blue: #d93a22;
+}
+
+*:not(:disabled),
 *::before,
 *::after {
   margin: 0;
@@ -28,10 +44,11 @@
   line-height: 1.3rem;
   list-style: none;
   text-decoration: none;
+  color: var(--font-color);
 }
 
 a {
-  color: black;
+  color: var(--font-color);
 }
 
 label {
@@ -448,12 +465,12 @@ hr {
 }
 
 .text-imp {
-  color: white;
+  color: var(--font-imp-white);
   font-weight: bold;
 }
 
 .text-imp-b {
-  color: black;
+  color: var(--font-imp-black);
   font-weight: bold;
 }
 
@@ -519,7 +536,6 @@ input:hover {
 .search-bar:focus {
   outline: none;
   border: 2px solid var(--btn-blue);
-  
 }
 
 .searching:focus {
@@ -574,6 +590,8 @@ a.pseudo-select {
   z-index: 5;
 }
 
+.btn.orange-bg,
+.header.orange-bg,
 .orange-bg {
   background-color: var(--orange);
 }
@@ -661,7 +679,7 @@ a.pseudo-select {
 
 .fadeout {
   width: 140%;
-  background: linear-gradient(#ffffff66, #33333366);
+  background: linear-gradient(#ffffff00, #333333ee);
   height: 300%;
   transform: translate(-1.5%, -150%);
 }
@@ -719,4 +737,23 @@ a.pseudo-select {
   height: 20px;
   position: absolute;
   transform: translate(-50%, -50%);
+}
+
+.toggle-btn-off {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  background: url('./imgs/toggle.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.toggle-btn-on {
+  display: inline-block;
+  width: 1.5em;
+  height: 1.5em;
+  background: url('./imgs/toggle-on.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  transform: rotate(180deg) translateY(5px);
 }
