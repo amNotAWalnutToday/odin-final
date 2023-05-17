@@ -2,6 +2,7 @@
   --page-bg: #dae0e6;
   --box-bg: #fff;
   --bar-bg: rgb(248 249 250);
+  --bar-fade-bg: rgba(248, 249, 250, 0.8);
   --btn-blue: #0079d3;
   --icon-blue: #19f;
   --underlay-bg: #111111cc;
@@ -229,7 +230,7 @@ hr {
   min-width: 2.5rem;
   padding: 1rem 0;
   align-items: center;
-  background-color: var(--bar-bg);
+  background-color: var(--bar-fade-bg);
 }
 
 .rating-bar.comment-btn {

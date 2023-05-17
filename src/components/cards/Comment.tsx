@@ -57,7 +57,7 @@ export default function Comment({
     }
 
     const toggleAfterSetIsPosting = (bool: boolean) => {
-        setIsPosting(bool);
+        setIsPosting((b) => !b);
         toggleIsReplying();
     }
 

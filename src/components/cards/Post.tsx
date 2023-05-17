@@ -134,7 +134,6 @@ export default function Post({
             />
             <div 
                 className={`post-main ${pageType !== 'post' ? 'hover' : ''}`} 
-                onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
             >
                 <div className="post-top">
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -159,6 +158,7 @@ export default function Post({
                 <div 
                     ref={postElementRef}
                     className={`htmlrevert ${pageType !== 'post' ? 'post-fixed' : ''}`} 
+                    onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
                 >
                     {parse(post.message)}
                     {post.isLink
@@ -171,7 +171,10 @@ export default function Post({
                     }                    
                 </div>
                 <div className="post-bottom">
-                    <p className='text-trivial text-link line-flex' >
+                    <p 
+                        className='text-trivial text-link line-flex' 
+                        onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
+                    >
                         <span className="reply-btn-icon" />
                         {post?.amountOfComments ?? 0} Comments
                     </p>

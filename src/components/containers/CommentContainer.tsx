@@ -1,7 +1,8 @@
 import { 
     query,
     getDocs,
-    collection
+    collection,
+    orderBy,
 } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -50,7 +51,7 @@ export default function CommentContainer({
     }
 
     useEffect(() => {
-        getComments(commentUrl, setViewableComments);
+        setTimeout(() => getComments(commentUrl, setViewableComments), 500);
         /*eslint-disable-next-line*/
     }, [post, isPosting]);
 
@@ -61,6 +62,7 @@ export default function CommentContainer({
         setIsPosting(false);
         const commentQuery = query(
             collection(db, queryUrl),
+            orderBy("timestamp", "asc"),
         );
         const snapshot = await getDocs(commentQuery);
         const commentData: any = [];
@@ -96,7 +98,7 @@ export default function CommentContainer({
         <div className="post-container comment-container border">
             <ComposePost
                 {...composePostProps}
-            ></ComposePost>
+            />
             <div className="post-container comment-container comment-list hpad" style={{alignSelf: 'flex-start'}}>
                 {mapComments(
                     viewableComments ?? [],
