@@ -132,9 +132,7 @@ export default function Post({
                     }
                 }}
             />
-            <div 
-                className={`post-main ${pageType !== 'post' ? 'hover' : ''}`} 
-            >
+            <div className={`post-main`}>
                 <div className="post-top">
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
                         <p className="text-trivial" style={{fontSize: '0.8em'}} >
@@ -157,7 +155,7 @@ export default function Post({
                 </div>
                 <div 
                     ref={postElementRef}
-                    className={`htmlrevert ${pageType !== 'post' ? 'post-fixed' : ''}`} 
+                    className={`htmlrevert ${pageType !== 'post' ? 'post-fixed' : ''}  ${pageType !== 'post' ? 'hover' : ''}`} 
                     onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
                 >
                     {parse(post.message)}

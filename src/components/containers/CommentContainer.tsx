@@ -62,7 +62,7 @@ export default function CommentContainer({
         setIsPosting(false);
         const commentQuery = query(
             collection(db, queryUrl),
-            orderBy("timestamp", "asc"),
+            orderBy("upvotesNum", "desc"),
         );
         const snapshot = await getDocs(commentQuery);
         const commentData: any = [];
