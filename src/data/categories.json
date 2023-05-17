@@ -38,5 +38,9 @@
     {
         "group": "Food and Drink",
         "url": "/t/food%20and%20drink"
+    },
+    {
+        "group": "Animals and Pets",
+        "url": "/t/animals%20and%20pets"
     }
 ]
