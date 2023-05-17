@@ -337,6 +337,10 @@ hr {
   color: var(--btn-blue);
 }
 
+.reply-btn {
+  background-color: unset;
+}
+
 .reply-btn:hover {
   filter: brightness(95%); 
 }
@@ -606,7 +610,7 @@ a.pseudo-select {
 }
 
 .ql-toolbar {
-  border-radius: 9px;
+  border-radius: 9px 9px 0px 0px;
   background-color: var(--bar-bg);
   box-shadow: var(--sborder);
   transform: translate(0, 8px);
@@ -621,8 +625,23 @@ a.pseudo-select {
 }
 
 .ql-container {
-  border-radius: 9px;
-  resize: both;
+  border-radius: 0px 0px 9px 9px;
+  transform: translateY(8px);
+}
+
+.ql-container:hover {
+  border-top: none !important;
+  border-left: 1px outset var(--btn-blue) !important;
+  border-bottom: 1px outset var(--btn-blue) !important;
+  border-right: 1px outset var(--btn-blue) !important;
+}
+
+.ql-editor:focus {
+  border-radius: 0px 0px 9px 9px;
+  border-top: none !important;
+  border-left: 2px inset var(--btn-blue) !important;
+  border-bottom: 1px inset var(--btn-blue) !important;
+  border-right: 2px inset var(--btn-blue) !important;
 }
 
 .htmlrevert {
