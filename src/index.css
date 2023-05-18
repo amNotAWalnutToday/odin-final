@@ -392,6 +392,11 @@ hr {
   font-size: 30px;
 }
 
+.remove-btn {
+  position: absolute;
+  transform: translate(500px, -5px);
+}
+
 .dropdown-btn {
   background-color: var(--box-bg);
   padding: 1rem 1rem;

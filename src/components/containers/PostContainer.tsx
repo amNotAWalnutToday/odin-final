@@ -182,6 +182,7 @@ export default function PostContainer({
                     post={post}
                     posts={posts}
                     setPosts={setPosts}
+                    subSettings={subSettings}
                     user={user}
                     pageType={pageType} 
                     sumVotes={sumVotes}

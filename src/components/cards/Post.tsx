@@ -1,11 +1,12 @@
 import { 
     updateDoc, 
+    deleteDoc,
     doc, 
     Timestamp, 
     collection, 
     where, 
     getDocs, 
-    query 
+    query, 
 } from 'firebase/firestore';
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -21,6 +22,7 @@ type Props = {
     post: PostSchema,
     posts: PostSchema[],
     setPosts: React.Dispatch<React.SetStateAction<PostSchema[]>>,
+    subSettings: SubSchema | undefined,
     user: UserSchema | undefined,
     pageType: string,
     sumVotes: (post: PostSchema) => number,
@@ -33,6 +35,7 @@ export default function Post({
         post, 
         posts, 
         setPosts, 
+        subSettings,
         user, 
         pageType,
         sumVotes,
@@ -86,6 +89,20 @@ export default function Post({
             }
             await updateDoc(doc(db, 'posts', post._id), thisPost);
             setPosts(postSlice);
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
+    const removePost = async () => {
+        try {
+            if(!user || (user.email !== subSettings?.creator)) throw Error;
+            const postSlice = [...posts];
+            const thisPostInd = postSlice.findIndex((p) => p._id === post._id);
+            postSlice.splice(thisPostInd, 1);
+
+            await deleteDoc(doc(db, "posts", post._id));
+            setPosts((prevPosts) => [...postSlice]);
         } catch(err) {
             console.error(err);
         }
@@ -169,6 +186,14 @@ export default function Post({
                     }                    
                 </div>
                 <div className="post-bottom">
+                {(user?.email === subSettings?.creator && pageType )
+                    &&
+                    <button 
+                        className='btn-input-bg btn flair remove-btn'
+                        onClick={removePost}
+                    >
+                        Remove
+                    </button>}
                     <p 
                         className='text-trivial text-link line-flex' 
                         onClick={pageType !== 'post' ? () => navigate(`/r/${post.parent}/${post._id}/comments`) : undefined} 
