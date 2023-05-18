@@ -1,9 +1,11 @@
 import SidebarCard from "../cards/SidebarCard"
+import RulesCard from "../cards/RulesCard";
 import HomeSidebarCard from "../cards/HomeSidebarCard";
 import PolicySidebarCard from "../cards/PolicySidebarCard";
 import ProfileSidebarCard from "../cards/ProfileSidebarCard";
 import SubSchema from "../../schemas/sub"
 import UserSchema from "../../schemas/user";
+import postingRules from '../../data/postingRules.json';
 
 type Props = {
     pageType: string,
@@ -66,7 +68,18 @@ export default function GroupSidebar({
                 type={'rules'}
             />
             }
-
+            {pageType === 'submit'
+            &&
+            <RulesCard 
+                headerSettings={
+                    {
+                        color: '',
+                        title: 'Posting to Replicatedit'
+                    }
+                }
+                rules={postingRules}
+            />
+            }
             <button 
                 className='scroll-btn btn flair' 
                 onClick={() => {

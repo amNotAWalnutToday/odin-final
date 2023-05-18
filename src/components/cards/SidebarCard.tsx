@@ -2,6 +2,7 @@ import { Timestamp } from 'firebase/firestore';
 import { useContext, useState } from 'react';
 import Details from "../other/Details";
 import EditSub from '../other/EditSub';
+import RulesCard from './RulesCard';
 import { UserContext } from '../../RouteSwitch';
 import SubSchema from "../../schemas/sub";
 
@@ -36,19 +37,6 @@ export default function SidebarCard({subSettings, updateSubSettings, type}: Prop
         return subSettings?.categories.map((category, ind) => {
             return(
                 <button key={ind} className="btn flair" >{category}</button>
-            )
-        });
-    }
-
-    const mapRules = () => {
-        return subSettings?.rules.map((rule, ind) => {
-            return(
-                <Details
-                    title={rule.rule}
-                    description={rule.description}
-                    numInList={ind + 1}
-                    key={ind}
-                />
             )
         });
     }
@@ -101,16 +89,14 @@ export default function SidebarCard({subSettings, updateSubSettings, type}: Prop
     ) 
     : type === 'rules' && subSettings?.rules
         ? 
-        <div className="card border">
-            <div 
-                className="header card"
-                style={{backgroundColor: `${subSettings?.custom?.cardHeaderColor}`}} 
-            >
-                <h4 className="text-imp">r/{subSettings?.name.replace(' ', '')} Rules</h4>
-            </div>
-            <ul className="card body">
-                {mapRules()}
-            </ul>
-        </div>
+        <RulesCard 
+            headerSettings={
+                {
+                    color: subSettings?.custom?.cardHeaderColor, 
+                    title: `r/${subSettings?.name.replace(" ", "")} Rules`
+                }
+            }
+            rules={subSettings?.rules}
+        />
         : <div></div>
 }
