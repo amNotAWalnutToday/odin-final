@@ -335,6 +335,10 @@ hr {
   padding: 0.55rem 2.5rem;
 }
 
+.btn:disabled {
+  filter: brightness(20%);
+}
+
 .btn-input-bg {
   color: var(--btn-blue);
 }
@@ -347,7 +351,7 @@ hr {
   filter: brightness(95%); 
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
   filter: brightness(110%); 
 }
 

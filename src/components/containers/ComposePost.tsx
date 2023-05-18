@@ -162,6 +162,7 @@ export default function ComposePost({
                             style={{alignSelf: 'flex-end'}}
                             className="btn flair" 
                             onClick={pageType === 'submit' ? postPost : sendComment}
+                            disabled={pageType === 'submit' && !postDetails.title}
                         >
                             {pageType === 'submit' ? 'Post' : 'Reply'}
                         </button>

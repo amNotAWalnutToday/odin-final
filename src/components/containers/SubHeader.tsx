@@ -1,4 +1,12 @@
-import { doc, deleteDoc } from "firebase/firestore"
+import { 
+    doc, 
+    deleteDoc, 
+    writeBatch, 
+    collection, 
+    query,
+    where, 
+    getDocs 
+} from "firebase/firestore"
 import { useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import { db, UserContext } from "../../RouteSwitch"
@@ -18,6 +26,16 @@ export default function SubHeader({subSettings, checkHasJoinedSub, joinSub}: Pro
         try {
             if(!subSettings || !user || user.email !== subSettings.creator) return;
             await deleteDoc(doc(db, 'subs', subSettings?._id));
+            const postBatch = writeBatch(db);
+            const postQuery = query(
+                collection(db, "posts"),
+                where("parent", "==", subSettings?.name),
+            );
+            const subPosts = await getDocs(postQuery);
+            subPosts.forEach((subPost) => {
+                postBatch.delete(subPost.ref)
+            });
+            await postBatch.commit();
             navigate('/');
         } catch(err) {
             console.error(err);
