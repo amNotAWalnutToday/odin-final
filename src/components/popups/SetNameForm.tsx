@@ -6,7 +6,7 @@ import {
     collection,
     where,
 } from 'firebase/firestore';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { db } from '../../RouteSwitch';
 import UserSchema from '../../schemas/user';
 
@@ -17,6 +17,32 @@ type Props = {
 
 export default function SetNameForm({user, toggleShowSetName}: Props) {
     const username = useRef<HTMLInputElement>(null);
+    const [isNameTaken, setIsNameTaken] = useState<boolean>(false);
+
+    useEffect(() => {
+        if(!isNameTaken) return;
+        updateName();
+        /*eslint-disable-next-line*/
+    }, [isNameTaken]);
+
+    const checkIfNameTaken = async (name: string) => {
+        try {
+            if(!user) throw console.error('no user');
+            if(!name) throw Error;
+            const userQuery = query(
+                collection(db, "users"),
+                where("name", "==", name)
+            );
+            const snapshot = await getDocs(userQuery);
+            let isTaken = false;
+            snapshot.forEach(user => {
+                if(user.data()) isTaken = true;
+            });
+            !isTaken && setIsNameTaken((b) => !b);
+        } catch(err) {
+            console.error(err);
+        }
+    }
 
     const updateName = async () => {
         try {
@@ -30,7 +56,7 @@ export default function SetNameForm({user, toggleShowSetName}: Props) {
             let uid: any;
             snapshot.forEach(async (user) => {
                 uid = user.id;
-            }) 
+            });
             await updateDoc(doc(db, 'users', uid), {name: username.current.value});
             toggleShowSetName();
             console.log('username is now ' + username.current.value);
@@ -55,7 +81,7 @@ export default function SetNameForm({user, toggleShowSetName}: Props) {
                 />
                 <button
                     className="btn orange-bg"
-                    onClick={updateName}
+                    onClick={() => checkIfNameTaken(username?.current?.value ?? '')}
                 >
                     Set Name
                 </button>
