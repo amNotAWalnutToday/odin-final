@@ -13,7 +13,7 @@ import {
     where, 
     Timestamp 
 } from 'firebase/firestore';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { db, auth } from '../../RouteSwitch';
 import UserSchema from '../../schemas/user';
 
@@ -36,12 +36,14 @@ export default function LoginForm({
         setUser
     }: Props) {
     const email = useRef<HTMLInputElement>(null);
+    const [emailHasSent, setEmailHasSent] = useState<boolean>(false);
 
     const authStepOne = async () => {
         try {
             if(!email.current) return;
             await sendSignInLinkToEmail(auth, email.current.value, actionCodeSettings);
             window.localStorage.setItem('emailForSignIn', email.current.value);
+            setEmailHasSent(() => true);
             console.log('email sent');
         } catch(e) {
             console.error(e);
@@ -110,11 +112,21 @@ export default function LoginForm({
                         placeholder="Email"
                     />
                 }
+                {!emailHasSent
+                ?
                 <button className="btn orange-bg" onClick={() => {
-                    !window.localStorage.getItem('emailForSignIn')
-                        ? authStepOne()
-                        : signIn();
-                }}>Log In</button>
+                        !window.localStorage.getItem('emailForSignIn')
+                            ? authStepOne()
+                            : signIn();
+                    }}
+                >
+                    Log In
+                </button>
+                :
+                <button className='btn-input-bg btn'>
+                    Sent
+                </button>
+                }
                 <p>Already got an email?  
                     <span onClick={toggleCanLogin} style={{color: 'red'}}> Click here to authenticate!</span>
                 </p>

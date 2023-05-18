@@ -21,6 +21,7 @@ export const UserContext = createContext({} as UserContextInterface);
 
 export default function RouteSwitch() {
     const [user, setUser] = useState<UserSchema>();
+    const [relogAttempts, setRelogAttempts] = useState(0);
 
     const appProps = {
         user,
@@ -46,9 +47,15 @@ export default function RouteSwitch() {
 
     useEffect(() => {
         setTimeout(async() => {
-            if(auth.currentUser) await relog(auth.currentUser.email);
+            try {
+                if(auth.currentUser) await relog(auth.currentUser.email);
+                else throw Error;
+            } catch(err) {
+                console.error("Not Authenticated!");
+                relogAttempts < 10 && setRelogAttempts((attempts) => attempts + 1);
+            }
         }, 1000);
-    }, []);
+    }, [relogAttempts]);
 
     return (
         <Router> 
