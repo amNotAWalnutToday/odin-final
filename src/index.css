@@ -5,6 +5,7 @@
   --font-imp-black: #000;
   --box-bg: #fff;
   --bar-bg: rgb(248 249 250);
+  --list-hover: var(--bar-bg);
   --bar-fade-bg: rgba(248, 249, 250, 0.8);
   --btn-blue: #0079d3;
   --icon-blue: #19f;
@@ -28,6 +29,7 @@
   --font-imp-black: #fff;
   --box-bg: #222;
   --bar-bg: #222;
+  --list-hover: #3339;
   --bar-fade-bg: #22222299;
   --btn-blue: #d93a00;
   --icon-blue: #d93a22;
@@ -454,7 +456,7 @@ hr {
 
 .dropdown-box li:hover,
 .sidebar.main a:not(.pseudo-select):hover {
-  background-color: var(--bar-bg);
+  background-color: var(--list-hover);
 }
 
 
@@ -756,6 +758,10 @@ a.pseudo-select {
   height: 20px;
   position: absolute;
   transform: translate(-50%, -50%);
+}
+
+.btn-img.dark {
+  filter: invert();
 }
 
 .toggle-btn-off {

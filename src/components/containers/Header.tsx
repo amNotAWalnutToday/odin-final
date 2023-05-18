@@ -37,7 +37,7 @@ export default function Header({user, setUser, toggleLoginForm, isDarkMode, setI
                 {user 
                 && 
                 <button className='dropdown-btn border' onClick={toggleDropdown}>
-                    <img className='btn-img' src="person.svg" alt="" />           
+                    <img className={`btn-img ${isDarkMode ? 'dark' : ''}`} src="person.svg" alt="" />           
                 </button>}
                 {dropdownOpen 
                 && 
