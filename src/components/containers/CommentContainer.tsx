@@ -22,7 +22,8 @@ type Props = {
     setPosts: React.Dispatch<React.SetStateAction<PostSchema[]>>,
     subSettings: SubSchema | undefined,
     checkHasJoinedSub: (subSlice: SubSchema) => boolean,
-    checkIfUpvote: (votes: Vote[]) => "" | "upvote" | "downvote" | undefined
+    checkIfUpvote: (votes: Vote[]) => "" | "upvote" | "downvote" | undefined,
+    toggleLoginForm: () => void,
 }
 
 export default function CommentContainer({
@@ -33,6 +34,7 @@ export default function CommentContainer({
         subSettings,
         checkHasJoinedSub,
         checkIfUpvote,
+        toggleLoginForm,
     }: Props) {
     const { post } = useParams();
     
@@ -47,7 +49,8 @@ export default function CommentContainer({
         subSettings,
         checkHasJoinedSub,
         commentUrl,
-        setIsPosting
+        setIsPosting,
+        toggleLoginForm,
     }
 
     useEffect(() => {

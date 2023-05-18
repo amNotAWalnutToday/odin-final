@@ -61,6 +61,7 @@ export default function App({pageType, user, setUser}: Props) {
         pageType={pageType} 
         user={user}
         toggleShowCreateSub={toggleShowCreateSub}
+        toggleLoginForm={toggleLoginForm}
       />
       {showLogin
       && 

@@ -480,6 +480,10 @@ hr {
   font-weight: bold;
 }
 
+.text-crimson {
+  color: var(--crimson);
+}
+
 .text-trivial,
 .summary {
   display: block;
@@ -629,6 +633,18 @@ a.pseudo-select {
 .ql-container {
   border-radius: 0px 0px 9px 9px;
   transform: translateY(8px);
+}
+
+.ql-editor::-webkit-scrollbar {
+  width: 1em;
+  background-color: var(--list-hover);
+  border-radius: 9px;
+}
+
+.ql-editor::-webkit-scrollbar-thumb {
+  width: 1em;
+  background-color: var(--page-bg);
+  border-radius: 9px;
 }
 
 .ql-container:hover {

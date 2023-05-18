@@ -29,6 +29,7 @@ type Props = {
     setSubs: React.Dispatch<React.SetStateAction<SubSchema[]>>,
     joinSub: (subSlice: SubSchema) => void,
     checkHasJoinedSub: (subSlice: SubSchema) => boolean,
+    toggleLoginForm: () => void,
 }
 
 export default function PostContainer({
@@ -39,6 +40,7 @@ export default function PostContainer({
         setSubs,
         joinSub,
         checkHasJoinedSub,
+        toggleLoginForm,
     }: Props) {
     const [posts, setPosts] = useState<PostSchema[]>([]);
     const [canLoadMore, setCanLoadMore] = useState<boolean>(true);
@@ -224,6 +226,7 @@ export default function PostContainer({
                 subSettings={subSettings}
                 checkHasJoinedSub={checkHasJoinedSub}
                 checkIfUpvote={checkIfUpvote}
+                toggleLoginForm={toggleLoginForm}
             />
             }
         </div>

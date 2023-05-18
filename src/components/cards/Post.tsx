@@ -48,7 +48,7 @@ export default function Post({
     useEffect(() => {
         setTimeout(() => {
             const postHeight = postElementRef.current?.offsetHeight ?? 0;
-            postHeight > 399 
+            postHeight > 399 && pageType !== 'post'
                 ? setShouldFade(true)
                 : setShouldFade(false);
         }, 300);

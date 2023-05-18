@@ -13,9 +13,15 @@ type Props = {
     pageType: string,
     user: UserSchema | undefined,
     toggleShowCreateSub: () => void,
+    toggleLoginForm: () => void,
 }
 
-export default function Page({pageType, user, toggleShowCreateSub}: Props) {
+export default function Page({
+        pageType, 
+        user, 
+        toggleShowCreateSub,
+        toggleLoginForm,
+    }: Props) {
     const { sub } = useParams();
     const [subs, setSubs] = useState<SubSchema[]>([]);
     const [subSettings, setSubSettings] = useState<SubSchema>();
@@ -124,6 +130,7 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                     checkHasJoinedSub={checkHasJoinedSub}
                     commentUrl={undefined}
                     setIsPosting={undefined}
+                    toggleLoginForm={toggleLoginForm}
                 />
                 :
                 <PostContainer 
@@ -134,6 +141,7 @@ export default function Page({pageType, user, toggleShowCreateSub}: Props) {
                     setSubs={setSubs}
                     joinSub={joinSub}
                     checkHasJoinedSub={checkHasJoinedSub}
+                    toggleLoginForm={toggleLoginForm}
                 />
                 }
                 <GroupSidebar 

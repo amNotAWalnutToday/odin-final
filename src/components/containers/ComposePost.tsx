@@ -20,6 +20,7 @@ export type Props = {
     setIsPosting: React.Dispatch<React.SetStateAction<boolean>> 
         | ((bool: boolean) => void)
         | undefined,
+    toggleLoginForm: () => void,
 }
 
 export default function ComposePost({
@@ -31,6 +32,7 @@ export default function ComposePost({
         checkHasJoinedSub,
         commentUrl,
         setIsPosting,
+        toggleLoginForm,
     }: Props) {
     const navigate = useNavigate();
     const { sub, post } = useParams();
@@ -104,7 +106,7 @@ export default function ComposePost({
         }
     }
 
-    return(
+    return user ? (
         <div>
             <SubDropdown 
                 pageType={pageType}
@@ -170,6 +172,17 @@ export default function ComposePost({
                     />
                 </div>
             </div>
+        </div>
+    ) : (
+        <div>
+            <p className="text-crimson" style={{paddingTop: '1rem'}} >
+                <button 
+                    className="btn flair"
+                    onClick={toggleLoginForm}
+                >
+                    Sign In
+                </button> 
+            {' '}to comment!</p>
         </div>
     )
 }
