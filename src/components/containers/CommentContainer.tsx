@@ -54,7 +54,7 @@ export default function CommentContainer({
     }
 
     useEffect(() => {
-        setTimeout(() => getComments(commentUrl, setViewableComments), 500);
+        getComments(commentUrl, setViewableComments);
         /*eslint-disable-next-line*/
     }, [post, isPosting]);
 
@@ -73,6 +73,7 @@ export default function CommentContainer({
             commentData.push({_id: comment.id, ...comment.data()});
         })
         setter(commentData);
+        console.log('happening');
     }
 
     const mapComments = (

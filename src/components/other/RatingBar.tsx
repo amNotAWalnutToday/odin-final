@@ -13,6 +13,10 @@ type Props = {
         replyBtn: {
             hasBtn: boolean,
             btnClick: (() => void) | undefined,
+        },
+        hideBtn: {
+            hasBtn: boolean,
+            btnClick: (() => void) | undefined,
         }
     }
 }
@@ -52,6 +56,16 @@ export default function RatingBar({
             >
                 <div className="reply-btn-icon"></div>
                 Reply
+            </button>
+            }
+            {barSettings.hideBtn.hasBtn 
+            &&
+            <button
+                className="reply-btn borderless border hpad"
+                style={{paddingRight: '1rem', marginLeft: '1rem'}}
+                onClick={barSettings.hideBtn.btnClick}
+            >
+                hide
             </button>
             }
         </div>

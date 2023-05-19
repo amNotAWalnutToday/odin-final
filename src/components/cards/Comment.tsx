@@ -1,5 +1,5 @@
 import { doc, updateDoc, Timestamp } from "firebase/firestore";
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import parse from 'html-react-parser';
 import { db } from "../../RouteSwitch";
 import { Vote } from "../../schemas/post";
@@ -36,6 +36,9 @@ export default function Comment({
         composePostProps,
         checkIfUpvote
     }: Props) {
+    const commentContainer = useRef<HTMLDivElement>(null);
+
+    const [isHiding, setIsHiding] = useState<boolean>(true);
     const [isReplying, setIsReplying] = useState<boolean>(false);
     const toggleIsReplying = () => setIsReplying(!isReplying);
     const [viewableComments, setViewableComments] = useState<CommentSchema[]>([]);
@@ -43,9 +46,15 @@ export default function Comment({
     const updatedCommentUrl = `${commentUrl}/${comment._id}/comments`;
 
     useEffect(() => {
+        if(isHiding) return;
         getComments(updatedCommentUrl, setViewableComments);
         /*eslint-disable-next-line*/
-    }, [isPosting]);
+    }, [isPosting, isHiding]);
+
+    useMemo(() => {
+        const isTooDeep = updatedCommentUrl.split("/").length;
+        isTooDeep >= 13 ? setIsHiding(() => true) : setIsHiding(() => false);
+    }, [updatedCommentUrl]);
 
     const convertTime = (timestamp: Timestamp | undefined) => {
         const date = timestamp?.toDate().toDateString().split(' ');
@@ -102,12 +111,12 @@ export default function Comment({
         }
     }
 
-    return(
-        <div className="left-border comment" >
+    return !isHiding ? (
+        <div className="left-border comment" ref={commentContainer}>
             <div className="comment-main" >
                 <span className="line-flex" >
                     <strong>{comment.poster}</strong>
-                    <span className="text-trivial" >
+                    <span className="text-trivial" style={{width: "20%"}}>
                         {' '}{convertTime(comment.timestamp)}
                     </span>
                 </span>
@@ -126,7 +135,11 @@ export default function Comment({
                     replyBtn: {
                         hasBtn: true,
                         btnClick: toggleIsReplying,
-                    }
+                    },
+                    hideBtn: {
+                        hasBtn: updatedCommentUrl.split("/").length >= 13,
+                        btnClick: () => setIsHiding(b => !b),
+                    },
                 }}
             />
             }
@@ -142,6 +155,8 @@ export default function Comment({
             </div>
             <div 
                 className="comment-list flex-col"
+                data-comment
+                data-hide={isHiding ? true : false}
             >
                 {mapComments(
                     viewableComments ?? [], 
@@ -150,5 +165,22 @@ export default function Comment({
                 )}
             </div>
         </div>
+    ) : (
+        <>
+            <div
+                className="comment-list flex-col width100"
+            >
+                <button className="btn flair btn-input-bg"
+                    onClick={() => setIsHiding(b => !b)}
+                >
+                    Show
+                </button>
+                {mapComments(
+                    viewableComments ?? [],
+                    updatedCommentUrl,
+                    setViewableComments,
+                )}
+            </div>
+        </>
     )
 }

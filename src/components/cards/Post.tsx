@@ -146,7 +146,11 @@ export default function Post({
                     replyBtn: {
                         hasBtn: false, 
                         btnClick: undefined
-                    }
+                    },
+                    hideBtn: {
+                        hasBtn: false,
+                        btnClick: undefined,
+                    },
                 }}
             />
             <div className={`post-main`}>
