@@ -58,7 +58,7 @@ export default function RouteSwitch() {
     }, [relogAttempts]);
 
     return (
-        <Router> 
+        <Router basename='/odin-final-clone'> 
             <UserContext.Provider value={{user, setUser}}>
                 <Routes>
                     <Route

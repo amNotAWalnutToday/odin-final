@@ -18,7 +18,9 @@ import { db, auth } from '../../RouteSwitch';
 import UserSchema from '../../schemas/user';
 
 const actionCodeSettings = {
-    url: 'http://localhost:3000/',
+    url: window.location.href === 'http://localhost:3000/'
+        ? 'http://localhost:3000/'
+        : 'https://amnotawalnuttoday.github.io/odin-final-clone/',
     handleCodeInApp: true,
 };
 
