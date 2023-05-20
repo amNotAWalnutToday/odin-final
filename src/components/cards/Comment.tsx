@@ -120,9 +120,9 @@ export default function Comment({
                         {' '}{convertTime(comment.timestamp)}
                     </span>
                 </span>
-                <span className="hpad htmlrevert">
+                <pre className="hpad htmlrevert flex-col">
                     {parse(comment.message)}
-                </span>
+                </pre>
             </div>
             {<RatingBar
                 post={undefined}
