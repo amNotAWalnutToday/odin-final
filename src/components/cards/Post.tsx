@@ -190,7 +190,7 @@ export default function Post({
                     }                    
                 </div>
                 <div className="post-bottom">
-                {(user?.email === subSettings?.creator && pageType )
+                {(user?.email === subSettings?.creator && pageType === 'sub')
                     &&
                     <button 
                         className='btn-input-bg btn flair remove-btn'

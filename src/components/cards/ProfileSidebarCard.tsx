@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { UserContext } from "../../RouteSwitch";
 import SubDropdown from "../other/SubDropdown";
 
 type Props = {
@@ -8,6 +10,7 @@ type Props = {
 export default function ProfileSidebarCard({pageType}: Props) {
     const { username } = useParams();
     const navigate = useNavigate();
+    const { user } = useContext(UserContext);
     
     return(
         <div className="card border" >
@@ -27,9 +30,12 @@ export default function ProfileSidebarCard({pageType}: Props) {
                 >
                     New Post
                 </button>
+                {username === user?.name
+                &&
                 <SubDropdown 
                     pageType={pageType}
                 />
+                }
             </div>
         </div>
     )

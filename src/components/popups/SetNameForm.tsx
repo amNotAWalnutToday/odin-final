@@ -6,18 +6,17 @@ import {
     collection,
     where,
 } from 'firebase/firestore';
-import { useEffect, useRef, useState } from 'react';
-import { db } from '../../RouteSwitch';
-import UserSchema from '../../schemas/user';
+import { useEffect, useRef, useState, useContext } from 'react';
+import { UserContext, db } from '../../RouteSwitch';
 
 type Props = {
-    user: UserSchema | undefined,
     toggleShowSetName: () => void,
 }
 
-export default function SetNameForm({user, toggleShowSetName}: Props) {
+export default function SetNameForm({toggleShowSetName}: Props) {
     const username = useRef<HTMLInputElement>(null);
     const [isNameTaken, setIsNameTaken] = useState<boolean>(false);
+    const { user, setUser } = useContext(UserContext);
 
     useEffect(() => {
         if(!isNameTaken) return;
@@ -47,7 +46,8 @@ export default function SetNameForm({user, toggleShowSetName}: Props) {
     const updateName = async () => {
         try {
             if(!user || !username.current) throw console.error('no user!');
-            if(!username.current.value) return;
+            const newUserName = username.current.value;
+            if(!newUserName) return;
             const userQuery = query(
                 collection(db, 'users'),
                 where("email", '==', user.email)
@@ -57,8 +57,11 @@ export default function SetNameForm({user, toggleShowSetName}: Props) {
             snapshot.forEach(async (user) => {
                 uid = user.id;
             });
-            await updateDoc(doc(db, 'users', uid), {name: username.current.value});
+            await updateDoc(doc(db, 'users', uid), {name: newUserName});
             toggleShowSetName();
+            setUser((prev) => {
+                return prev ? { ...prev, name: newUserName } : prev
+            })
             console.log('username is now ' + username.current.value);
         } catch(e) {
             console.error(e);

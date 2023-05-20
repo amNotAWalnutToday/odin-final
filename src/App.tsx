@@ -18,7 +18,7 @@ export default function App({pageType, user, setUser}: Props) {
   const [showSetName, setShowSetName] = useState<boolean>(false);
   const [showCreateSub, setShowCreateSub] = useState<boolean>(false);
   const toggleLoginForm = () => setShowLogin(!showLogin);
-  const toggleShowSetName = () => setShowSetName(!showSetName);
+  const toggleShowSetName = () => setShowSetName((showSetName) => !showSetName);
   const toggleShowCreateSub = () => setShowCreateSub(!showCreateSub);
 
   const [canLogin, setCanLogin] = useState<boolean>(false);
@@ -75,7 +75,6 @@ export default function App({pageType, user, setUser}: Props) {
       {showSetName
       &&
       <SetNameForm 
-        user={user}
         toggleShowSetName={toggleShowSetName}
       />
       }

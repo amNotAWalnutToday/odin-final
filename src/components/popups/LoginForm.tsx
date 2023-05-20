@@ -3,7 +3,7 @@ import {
     isSignInWithEmailLink, 
     signInWithEmailLink,
     setPersistence,
-    browserLocalPersistence
+    browserLocalPersistence,
 } from 'firebase/auth';
 import { 
     query, 
@@ -75,8 +75,9 @@ export default function LoginForm({
                     }
                 });
                 if(!currentUser) {
+                    console.log(authedUser);
                     currentUser = {
-                        uid: authedUser.providerId,
+                        uid: authedUser.user.uid,
                         email,
                         name: 'Anon',
                         timestamp: Timestamp.now(),
