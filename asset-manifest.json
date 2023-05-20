@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/odin-final-clone/static/css/main.9e6a2f3e.css",
-    "main.js": "/odin-final-clone/static/js/main.c2a26c76.js",
-    "static/media/icon.png": "/odin-final-clone/static/media/icon.1b93bdeb3d55b2115e46.png",
-    "index.html": "/odin-final-clone/index.html",
-    "static/media/toggle.svg": "/odin-final-clone/static/media/toggle.ea9ade7df9e8ead4f1df.svg",
-    "static/media/reply.svg": "/odin-final-clone/static/media/reply.3a6f15a84f448dd28560.svg",
-    "static/media/arrow.svg": "/odin-final-clone/static/media/arrow.a7e8fa81b0b3ba777aa4.svg",
-    "main.9e6a2f3e.css.map": "/odin-final-clone/static/css/main.9e6a2f3e.css.map",
-    "main.c2a26c76.js.map": "/odin-final-clone/static/js/main.c2a26c76.js.map"
+    "main.css": "/odin-final/static/css/main.95e7bc5e.css",
+    "main.js": "/odin-final/static/js/main.1bf20330.js",
+    "static/media/icon.png": "/odin-final/static/media/icon.1b93bdeb3d55b2115e46.png",
+    "index.html": "/odin-final/index.html",
+    "static/media/toggle.svg": "/odin-final/static/media/toggle.ea9ade7df9e8ead4f1df.svg",
+    "static/media/reply.svg": "/odin-final/static/media/reply.3a6f15a84f448dd28560.svg",
+    "static/media/arrow.svg": "/odin-final/static/media/arrow.a7e8fa81b0b3ba777aa4.svg",
+    "main.95e7bc5e.css.map": "/odin-final/static/css/main.95e7bc5e.css.map",
+    "main.1bf20330.js.map": "/odin-final/static/js/main.1bf20330.js.map"
   },
   "entrypoints": [
-    "static/css/main.9e6a2f3e.css",
-    "static/js/main.c2a26c76.js"
+    "static/css/main.95e7bc5e.css",
+    "static/js/main.1bf20330.js"
   ]
 }
