@@ -152,7 +152,7 @@ export default function PostContainer({
     const checkIfUpvote = (votes: Vote[]) => {
         if(!user) return '';
         for(const voter of votes) {
-            if(voter.user === user.email) {
+            if(voter.user === user.uid) {
                 return voter.isUpvote ? 'upvote' : 'downvote';
             }
         }

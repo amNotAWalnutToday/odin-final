@@ -50,7 +50,7 @@ export default function SetNameForm({toggleShowSetName}: Props) {
             if(!newUserName) return;
             const userQuery = query(
                 collection(db, 'users'),
-                where("email", '==', user.email)
+                where("uid", '==', user.uid)
             );
             const snapshot = await getDocs(userQuery);
             let uid: any;

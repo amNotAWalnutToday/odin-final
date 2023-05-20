@@ -63,8 +63,8 @@ export default function CreateCommunityForm({toggleShowCreateSub}: Props) {
                 categories: [],
                 rules: [],
                 timestamp: Timestamp.now(),
-                members: [user?.email],
-                creator: user?.email,
+                members: [user?.uid],
+                creator: user?.uid,
             }
             await addDoc(collection(db, 'subs'), newCommunity);
             toggleShowCreateSub();

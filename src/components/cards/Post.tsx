@@ -69,7 +69,7 @@ export default function Post({
     const checkForVoter = (upvotes: Vote[]) => {
         if(!user) return false;
         for(const voter of upvotes) {
-            if(voter.user === user.email) return true;
+            if(voter.user === user.uid) return true;
         }
     }
     
@@ -82,10 +82,10 @@ export default function Post({
             }
             if(!thisPost || !user) throw Error;
             if(checkForVoter(post.upvotes)) {
-                const ind = thisPost.upvotes.findIndex((p) => p.user === user.email);
+                const ind = thisPost.upvotes.findIndex((p) => p.user === user.uid);
                 thisPost.upvotes.splice(ind, 1);
             } else {
-                thisPost.upvotes.push({user: user.email, isUpvote});
+                thisPost.upvotes.push({user: user.uid, isUpvote});
             }
             await updateDoc(doc(db, 'posts', post._id), thisPost);
             setPosts(postSlice);
@@ -96,7 +96,7 @@ export default function Post({
 
     const removePost = async () => {
         try {
-            if(!user || (user.email !== subSettings?.creator)) throw Error;
+            if(!user || (user.uid !== subSettings?.creator)) throw Error;
             const postSlice = [...posts];
             const thisPostInd = postSlice.findIndex((p) => p._id === post._id);
             postSlice.splice(thisPostInd, 1);
@@ -190,7 +190,7 @@ export default function Post({
                     }                    
                 </div>
                 <div className="post-bottom">
-                {(user?.email === subSettings?.creator && pageType === 'sub')
+                {(user?.uid === subSettings?.creator && pageType === 'sub')
                     &&
                     <button 
                         className='btn-input-bg btn flair remove-btn'

@@ -24,7 +24,7 @@ export default function SubHeader({subSettings, checkHasJoinedSub, joinSub}: Pro
     
     const disbandSub = async () => {
         try {
-            if(!subSettings || !user || user.email !== subSettings.creator) return;
+            if(!subSettings || !user || user.uid !== subSettings.creator) return;
             await deleteDoc(doc(db, 'subs', subSettings?._id));
             const postBatch = writeBatch(db);
             const postQuery = query(
@@ -73,7 +73,7 @@ export default function SubHeader({subSettings, checkHasJoinedSub, joinSub}: Pro
                             Join
                         </button>
                         :
-                        subSettings?.creator === user?.email
+                        subSettings?.creator === user?.uid
                         ?
                         <button  
                             className="btn crimson-bg"

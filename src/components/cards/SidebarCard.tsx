@@ -65,7 +65,7 @@ export default function SidebarCard({subSettings, updateSubSettings, type}: Prop
                         <p className="text-trivial">Online</p>
                     </div>
                 </div>
-                {(user && user?.email === subSettings?.creator)
+                {(user && user?.uid === subSettings?.creator)
                 && 
                 <div className='card body' style={{padding: '2px'}} >
                     <hr />

@@ -62,23 +62,20 @@ export default function LoginForm({
                 let currentUser: UserSchema | undefined;
                 const userQuery = query(
                     collection(db, 'users'),
-                    where("email", "==", email)
+                    where("uid", "==", authedUser.user.uid)
                 );
                 const snapshot = await getDocs(userQuery);
                 snapshot.forEach((user) => {
                     const userTypes = user.data();
                     currentUser = {
                         uid: userTypes.uid,
-                        email: userTypes.email,
                         name: userTypes.name,
                         timestamp: userTypes.timestamp
                     }
                 });
                 if(!currentUser) {
-                    console.log(authedUser);
                     currentUser = {
                         uid: authedUser.user.uid,
-                        email,
                         name: 'Anon',
                         timestamp: Timestamp.now(),
                     }

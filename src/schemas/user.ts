@@ -1,8 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 
 type UserSchema = {
-    uid: string | null,
-    email: string,
+    uid: string,
     name: string,
     timestamp: Timestamp,
 }

@@ -73,7 +73,7 @@ export default function Comment({
     const checkForVoter = (upvotes: Vote[]) => {
         if(!composePostProps.user) return false;
         for(const voter of upvotes) {
-            if(voter.user === composePostProps.user.email) return true;
+            if(voter.user === composePostProps.user.uid) return true;
         }
     }
 
@@ -96,11 +96,11 @@ export default function Comment({
             const docUrl = getDocUrl(commentUrl);
             if(!thisComment || !composePostProps.user || !docUrl) throw Error;
             if(checkForVoter(thisComment.upvotesRef)) {
-                const ind = thisComment.upvotesRef.findIndex((c) => c.user === composePostProps?.user?.email);
+                const ind = thisComment.upvotesRef.findIndex((c) => c.user === composePostProps?.user?.uid);
                 const voterRef = thisComment.upvotesRef.splice(ind, 1)[0];
                 thisComment.upvotesNum += voterRef.isUpvote ? -1 : 1;
             } else {
-                const thisVote = {user: composePostProps.user.email, isUpvote};
+                const thisVote = {user: composePostProps.user.uid, isUpvote};
                 thisComment.upvotesRef.push(thisVote);
                 thisComment.upvotesNum += isUpvote ? 1 : -1;
             }

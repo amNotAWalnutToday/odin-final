@@ -51,7 +51,7 @@ export default function Page({
     const checkHasJoinedSub = (subSlice: SubSchema) => {
         let hasJoined = false;
         for(const member of subSlice.members) {
-            if(member === user?.email) hasJoined = true;
+            if(member === user?.uid) hasJoined = true;
         }
         return hasJoined;
     }
@@ -62,9 +62,9 @@ export default function Page({
             const subSlice = {...subSettings};
             const hasJoined = checkHasJoinedSub(subSlice);
             if(!hasJoined) {
-                subSlice.members?.push(user.email);
+                subSlice.members?.push(user.uid);
             } else {
-                const ind = subSlice.members?.findIndex((m) => m === user.email);
+                const ind = subSlice.members?.findIndex((m) => m === user.uid);
                 subSlice.members?.splice(ind, 1);
             }
             await updateDoc(doc(db, 'subs', subSettings._id), subSlice);

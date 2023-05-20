@@ -28,11 +28,11 @@ export default function RouteSwitch() {
         setUser,
     }
 
-    const relog = async (email: string | null) => {
+    const relog = async (uid: string | null) => {
         try {
             const userQuery = query(
                 collection(db, "users"),
-                where("email", "==", email) 
+                where("uid", "==", uid) 
             );
             const snapshot = await getDocs(userQuery);
             let authedUser;
@@ -41,14 +41,14 @@ export default function RouteSwitch() {
             });
             setUser(authedUser);
         } catch(err) {
-            console.error("Not Authenticated!");
+            console.error("Trying Again...");
         }
     }
 
     useEffect(() => {
         setTimeout(async() => {
             try {
-                if(auth.currentUser) await relog(auth.currentUser.email);
+                if(auth.currentUser) await relog(auth.currentUser.uid);
                 else throw Error;
             } catch(err) {
                 console.error("Not Authenticated!");

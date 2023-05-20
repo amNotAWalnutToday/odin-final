@@ -26,7 +26,7 @@ export default function SubDropdown({pageType}: Props) {
         if(!user) return;
         const communityQuery = query(
             collection(db, "subs"), 
-            where("members", 'array-contains', user?.email)
+            where("members", 'array-contains', user?.uid)
         )
         const snapshot = await getDocs(communityQuery);
         const subList: any = []
